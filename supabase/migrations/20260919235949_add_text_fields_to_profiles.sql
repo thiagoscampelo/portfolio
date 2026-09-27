@@ -1,0 +1,7 @@
+ALTER TABLE public.profiles
+ADD COLUMN IF NOT EXISTS hero_title TEXT,
+ADD COLUMN IF NOT EXISTS hero_subtitle TEXT,
+ADD COLUMN IF NOT EXISTS about_title TEXT,
+ADD COLUMN IF NOT EXISTS about_philosophy TEXT,
+ADD COLUMN IF NOT EXISTS contact_title TEXT,
+ADD COLUMN IF NOT EXISTS contact_subtitle TEXT;

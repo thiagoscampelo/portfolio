@@ -1,0 +1,16 @@
+[build]
+  command = "pnpm run build"
+  publish = "dist"
+
+# Variáveis VITE_* são públicas por design — Vite as embute no bundle client.
+# A segurança real do Supabase é garantida por RLS no servidor, não por essas chaves.
+# Portanto, instruímos o scanner a ignorá-las.
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "VITE_SUPABASE_URL,VITE_SUPABASE_ANON_KEY,VITE_SITE_URL"
+
+# SPA fallback: qualquer rota não encontrada serve o index.html.
+# Necessário porque React Router trata as rotas no cliente.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

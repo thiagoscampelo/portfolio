@@ -1,0 +1,18 @@
+{
+  "name": "Thiago Campelo — Portfolio",
+  "short_name": "T. Campelo",
+  "description": "Portfólio profissional de Thiago Campelo — Software Developer.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#060b16",
+  "theme_color": "#060b16",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

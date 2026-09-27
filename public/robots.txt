@@ -1,0 +1,11 @@
+# robots.txt — tsCampelo
+User-agent: *
+Allow: /
+
+# Admin não deve ser indexado
+Disallow: /login
+Disallow: /projetos/editar
+Disallow: /perfil
+Disallow: /experiencia/editar
+
+Sitemap: __SITE_URL__/sitemap.xml

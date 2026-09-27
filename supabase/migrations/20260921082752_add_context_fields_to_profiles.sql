@@ -1,0 +1,4 @@
+ALTER TABLE public.profiles
+ADD COLUMN IF NOT EXISTS timezone TEXT,
+ADD COLUMN IF NOT EXISTS response_time TEXT,
+ADD COLUMN IF NOT EXISTS languages TEXT[] DEFAULT '{}';
