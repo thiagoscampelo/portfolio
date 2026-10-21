@@ -24,6 +24,7 @@ import type {
   Experience,
   Profile,
   Project,
+  ProjectLink,
   Skill,
   SocialLink,
 } from "../types";
@@ -79,8 +80,7 @@ export function mapProject(data: ProjectRow): Project {
     description: data.description,
     content: data.content,
     coverImage: data.cover_image,
-    githubUrl: data.github_url,
-    demoUrl: data.demo_url,
+    links: (data.links as unknown as ProjectLink[]) || [],
     featured: data.featured ?? false,
     published: data.published ?? false,
     order: data.order ?? 0,

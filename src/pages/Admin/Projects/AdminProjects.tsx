@@ -4,13 +4,16 @@
  * Recursos:
  * - Criação/edição/exclusão de projetos (com modal em glass)
  * - Upload de imagem de capa para o bucket `portfolio-assets/projects/`
+ * - Editor de links do projeto: frontend, backend, demo, docs, figma,
+ *   vídeo e outros. Cada link pode ter URL (clicável) ou não (privado,
+ *   exibido como badge com cadeado no público).
  * - Toggle de publicação (rascunho/publicado)
  * - Toggle de destaque na Home (com limite visual de 3)
  * - Reordenação via ↑↓ (persiste `order` no Supabase)
  *
  * Estado da tabela:
- * - Em desktop, layout horizontal de 5 colunas.
- * - Em mobile, rolagem horizontal (`overflow-x-auto` + `min-w-[760px]`).
+ * - Desktop: 5 colunas.
+ * - Mobile: rolagem horizontal (`overflow-x-auto` + `min-w-[760px]`).
  */
 import { useCallback, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -27,15 +30,17 @@ import {
   Upload,
   Loader2,
   ImageIcon,
+  GripVertical,
 } from "lucide-react";
 import { supabase } from "../../../lib/supabase";
 import { mapProject } from "../../../lib/mappers";
-import { deleteFile, uploadFile } from "../../../lib/upload";
+import { uploadFile } from "../../../lib/upload";
 import { useReorder } from "../../../hooks/useReorder";
 import ReorderButtons from "../../../components/admin/ReorderButtons";
 import { useToast } from "../../../hooks/useToast";
 import { useConfirm } from "../../../hooks/useConfirm";
-import type { Project } from "../../../types";
+import { PROJECT_LINK_TYPES } from "../../../lib/projectLinks";
+import type { Project, ProjectLink, ProjectLinkType } from "../../../types";
 
 const HOME_FEATURED_LIMIT = 3;
 
@@ -54,13 +59,11 @@ export default function AdminProjects() {
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
   const [coverImage, setCoverImage] = useState("");
-  const [githubUrl, setGithubUrl] = useState("");
-  const [demoUrl, setDemoUrl] = useState("");
+  const [links, setLinks] = useState<ProjectLink[]>([]);
   const [technologiesInput, setTechnologiesInput] = useState("");
   const [featured, setFeatured] = useState(false);
   const [published, setPublished] = useState(true);
   const [uploadingCover, setUploadingCover] = useState(false);
-  const [persistedCoverImage, setPersistedCoverImage] = useState("");
 
   const featuredCount = projects.filter((p) => p.featured).length;
   const isOverLimit = featuredCount > HOME_FEATURED_LIMIT;
@@ -120,9 +123,7 @@ export default function AdminProjects() {
     setDescription("");
     setContent("");
     setCoverImage("");
-    setPersistedCoverImage("");
-    setGithubUrl("");
-    setDemoUrl("");
+    setLinks([]);
     setTechnologiesInput("");
     setFeatured(false);
     setPublished(true);
@@ -136,15 +137,39 @@ export default function AdminProjects() {
     setDescription(project.description);
     setContent(project.content);
     setCoverImage(project.coverImage || "");
-    setPersistedCoverImage(project.coverImage || "");
-    setGithubUrl(project.githubUrl || "");
-    setDemoUrl(project.demoUrl || "");
+    setLinks(project.links || []);
     setTechnologiesInput(
       project.technologies ? project.technologies.join(", ") : "",
     );
     setFeatured(project.featured);
     setPublished(project.published);
     setIsModalOpen(true);
+  }
+
+  /* ─────────── Handlers do editor de links ─────────── */
+
+  function handleAddLink() {
+    setLinks((prev) => [...prev, { type: "frontend", label: "", url: "" }]);
+  }
+
+  function handleUpdateLink(index: number, patch: Partial<ProjectLink>) {
+    setLinks((prev) =>
+      prev.map((l, i) => (i === index ? { ...l, ...patch } : l)),
+    );
+  }
+
+  function handleRemoveLink(index: number) {
+    setLinks((prev) => prev.filter((_, i) => i !== index));
+  }
+
+  function handleMoveLink(index: number, direction: "up" | "down") {
+    setLinks((prev) => {
+      const target = direction === "up" ? index - 1 : index + 1;
+      if (target < 0 || target >= prev.length) return prev;
+      const next = [...prev];
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
   }
 
   async function handleCoverChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -170,14 +195,22 @@ export default function AdminProjects() {
       .map((t) => t.trim())
       .filter((t) => t.length > 0);
 
+    // Sanitiza os links antes de enviar:
+    // - Remove entradas com tipo inválido (defensivo).
+    // - Converte strings vazias em null (o banco guarda null, não "").
+    const sanitizedLinks = links.map((l) => ({
+      type: l.type,
+      label: l.label?.trim() || null,
+      url: l.url?.trim() || null,
+    }));
+
     const projectData = {
       title,
       slug,
       description,
       content,
       cover_image: coverImage || null,
-      github_url: githubUrl || null,
-      demo_url: demoUrl || null,
+      links: sanitizedLinks,
       technologies: techArray,
       featured,
       published,
@@ -193,14 +226,6 @@ export default function AdminProjects() {
       } else {
         const { error } = await supabase.from("projects").insert([projectData]);
         if (error) throw error;
-      }
-      
-      if (
-        editingProject &&
-        persistedCoverImage &&
-        persistedCoverImage !== coverImage
-      ) {
-        await deleteFile(persistedCoverImage);
       }
 
       success(editingProject ? "Projeto atualizado." : "Projeto criado.");
@@ -290,11 +315,10 @@ export default function AdminProjects() {
           </p>
 
           <div
-            className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium ${
-              isOverLimit
+            className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium ${isOverLimit
                 ? "bg-amber-500/10 border-amber-500/30 text-amber-400"
                 : "bg-indigo-500/10 border-indigo-500/20 text-indigo-400"
-            }`}
+              }`}
           >
             <Star size={12} fill="currentColor" />
             <span>
@@ -320,7 +344,7 @@ export default function AdminProjects() {
         <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
       </motion.div>
 
-      {/* Tabela — responsiva via scroll horizontal em mobile */}
+      {/* Tabela */}
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
@@ -427,11 +451,10 @@ export default function AdminProjects() {
                         <motion.button
                           whileTap={{ scale: 0.85 }}
                           onClick={() => toggleFeatured(p)}
-                          className={`p-2 rounded-xl border transition-all ${
-                            p.featured
+                          className={`p-2 rounded-xl border transition-all ${p.featured
                               ? "text-amber-400 bg-amber-400/10 border-amber-400/30 shadow-lg shadow-amber-400/10"
                               : "text-[var(--color-muted)] border-transparent hover:border-[var(--color-border)] hover:text-[var(--color-foreground)]"
-                          }`}
+                            }`}
                           title={
                             p.featured
                               ? "Remover destaque da Home"
@@ -448,11 +471,10 @@ export default function AdminProjects() {
                       <td className="px-6 py-4 text-center">
                         <button
                           onClick={() => togglePublish(p)}
-                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-all ${
-                            p.published
+                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-all ${p.published
                               ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
                               : "bg-zinc-500/10 text-zinc-400 border-zinc-500/20"
-                          }`}
+                            }`}
                         >
                           {p.published ? (
                             <Eye size={13} />
@@ -545,6 +567,7 @@ export default function AdminProjects() {
                 onSubmit={handleSubmit}
                 className="flex-1 overflow-y-auto p-6 flex flex-col gap-5"
               >
+                {/* Imagem de capa */}
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
                     Imagem de Capa
@@ -652,15 +675,156 @@ export default function AdminProjects() {
 
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
-                    Conteúdo Detalhado
+                    Conteúdo Detalhado (suporta markdown)
                   </label>
                   <textarea
-                    rows={5}
+                    rows={8}
                     required
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition font-mono"
                   />
+                  <p className="mt-2 text-xs text-[var(--color-muted)]">
+                    Use `##` para títulos, `**negrito**`, `-` para listas e
+                    `` `código` ``.
+                  </p>
+                </div>
+
+                {/* Editor de links */}
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+                      Links do projeto
+                    </label>
+                    <button
+                      type="button"
+                      onClick={handleAddLink}
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)]/40 px-3 py-1.5 text-xs font-medium text-[var(--color-muted)] hover:text-indigo-400 hover:border-indigo-500/30 transition"
+                    >
+                      <Plus size={13} />
+                      Adicionar
+                    </button>
+                  </div>
+
+                  <p className="mb-4 text-xs text-[var(--color-muted)]">
+                    Deixe a URL vazia para sinalizar um recurso privado
+                    (aparece como badge com cadeado).
+                  </p>
+
+                  {links.length === 0 ? (
+                    <div className="rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-background)]/40 px-4 py-6 text-center text-xs text-[var(--color-muted)]">
+                      Nenhum link adicionado ainda.
+                    </div>
+                  ) : (
+                    <div className="flex flex-col gap-2">
+                      {links.map((link, index) => (
+                        <div
+                          key={index}
+                          className="grid grid-cols-1 sm:grid-cols-[auto_120px_1fr_1.5fr_auto] gap-2 items-center rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/40 p-2"
+                        >
+                          {/* Handle visual (indicador de ordem) */}
+                          <div className="hidden sm:flex items-center justify-center text-[var(--color-muted)]/30 px-1">
+                            <GripVertical size={14} />
+                          </div>
+
+                          {/* Tipo */}
+                          <select
+                            value={link.type}
+                            onChange={(e) =>
+                              handleUpdateLink(index, {
+                                type: e.target.value as ProjectLinkType,
+                              })
+                            }
+                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                          >
+                            {PROJECT_LINK_TYPES.map((t) => (
+                              <option
+                                key={t.value}
+                                value={t.value}
+                                className="bg-[var(--color-card)] text-[var(--color-foreground)]"
+                              >
+                                {t.label}
+                              </option>
+                            ))}
+                          </select>
+
+                          {/* Label custom */}
+                          <input
+                            type="text"
+                            placeholder="Rótulo (opcional)"
+                            value={link.label ?? ""}
+                            onChange={(e) =>
+                              handleUpdateLink(index, { label: e.target.value })
+                            }
+                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                          />
+
+                          {/* URL */}
+                          <input
+                            type="url"
+                            placeholder="https://... (deixe vazio se privado)"
+                            value={link.url ?? ""}
+                            onChange={(e) =>
+                              handleUpdateLink(index, { url: e.target.value })
+                            }
+                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                          />
+
+                          {/* Ações */}
+                          <div className="flex items-center gap-0.5 justify-end">
+                            <button
+                              type="button"
+                              onClick={() => handleMoveLink(index, "up")}
+                              disabled={index === 0}
+                              className="p-1.5 rounded-lg text-[var(--color-muted)] hover:text-indigo-400 hover:bg-indigo-500/10 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[var(--color-muted)] transition"
+                              title="Mover para cima"
+                            >
+                              <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="m18 15-6-6-6 6" />
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleMoveLink(index, "down")}
+                              disabled={index === links.length - 1}
+                              className="p-1.5 rounded-lg text-[var(--color-muted)] hover:text-indigo-400 hover:bg-indigo-500/10 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[var(--color-muted)] transition"
+                              title="Mover para baixo"
+                            >
+                              <svg
+                                width="12"
+                                height="12"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              >
+                                <path d="m6 9 6 6 6-6" />
+                              </svg>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveLink(index)}
+                              className="p-1.5 rounded-lg text-[var(--color-muted)] hover:text-red-400 hover:bg-red-500/10 transition"
+                              title="Remover link"
+                            >
+                              <X size={13} />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -674,34 +838,6 @@ export default function AdminProjects() {
                     onChange={(e) => setTechnologiesInput(e.target.value)}
                     className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
                   />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
-                      GitHub (URL)
-                    </label>
-                    <input
-                      type="url"
-                      placeholder="https://github.com/..."
-                      value={githubUrl}
-                      onChange={(e) => setGithubUrl(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
-                      Demo / Live (URL)
-                    </label>
-                    <input
-                      type="url"
-                      placeholder="https://..."
-                      value={demoUrl}
-                      onChange={(e) => setDemoUrl(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
-                    />
-                  </div>
                 </div>
 
                 <div className="flex items-center gap-6 pt-2 pb-2">

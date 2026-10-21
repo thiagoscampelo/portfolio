@@ -31,6 +31,8 @@ import { useProjectBySlug } from "../../hooks/useProjects";
 import PageMeta from "../../components/layout/PageMeta";
 import SmartImage from "../../components/layout/SmartImage";
 import Markdown from "../../components/layout/Markdown.tsx";
+import { getProjectLinkMeta } from "../../lib/projectLinks.ts";
+import { ExternalLink, Lock } from "lucide-react";
 
 export default function ProjectDetails() {
   const { slug } = useParams<{ slug: string }>();
@@ -84,9 +86,6 @@ export default function ProjectDetails() {
       </>
     );
   }
-
-  /* ─────────── Conteúdo ─────────── */
-  const hasLinks = project.githubUrl || project.demoUrl;
 
   return (
     <>
@@ -145,9 +144,9 @@ export default function ProjectDetails() {
                 className="w-full h-auto max-h-[80vh] object-contain"
                 fallback={
                   <div className="aspect-video w-full flex items-center justify-center">
-            <span className="text-sm font-medium uppercase tracking-wider text-[var(--color-muted)]">
-              [ Imagem / Banner Principal do Projeto ]
-            </span>
+                    <span className="text-sm font-medium uppercase tracking-wider text-[var(--color-muted)]">
+                      [ Imagem / Banner Principal do Projeto ]
+                    </span>
                   </div>
                 }
               />
@@ -185,38 +184,60 @@ export default function ProjectDetails() {
                   </div>
                 )}
 
-                {hasLinks && (
+                {project.links.length > 0 && (
                   <div>
                     <span className="text-xs font-medium uppercase tracking-[0.18em] text-[var(--color-muted)] block mb-4">
                       Links
                     </span>
                     <div className="flex flex-col gap-3">
-                      {project.githubUrl && (
-                        <a
-                          href={project.githubUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-foreground)] hover:text-indigo-400 transition-colors group"
-                        >
-                          Ver no GitHub
-                          <span className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">
-                            ↗
+                      {project.links.map((link, index) => {
+                        const meta = getProjectLinkMeta(link.type);
+                        const Icon = meta.icon;
+                        const label = link.label || meta.label;
+                        const hasUrl = !!link.url;
+
+                        // Link com URL → clicável.
+                        if (hasUrl) {
+                          return (
+                            <a
+                              key={`${link.type}-${index}`}
+                              href={link.url!}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2.5 text-sm font-medium text-[var(--color-foreground)] hover:text-indigo-400 transition-colors group"
+                            >
+                              <Icon
+                                size={15}
+                                className="text-[var(--color-muted)] group-hover:text-indigo-400 transition-colors shrink-0"
+                              />
+                              <span>{label}</span>
+                              <ExternalLink
+                                size={13}
+                                className="opacity-60 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                              />
+                            </a>
+                          );
+                        }
+
+                        // Link sem URL → badge "privado" (não clicável).
+                        return (
+                          <span
+                            key={`${link.type}-${index}`}
+                            className="inline-flex items-center gap-2.5 text-sm font-medium text-[var(--color-muted)]"
+                            title="Este recurso existe, mas não está disponível publicamente."
+                          >
+                            <Icon
+                              size={15}
+                              className="text-[var(--color-muted)]/60 shrink-0"
+                            />
+                            <span>{label}</span>
+                            <span className="inline-flex items-center gap-1 rounded-full border border-[var(--color-border)] bg-[var(--color-card)] px-2 py-0.5 text-[10px] font-mono uppercase tracking-wider text-[var(--color-muted)]/70">
+                              <Lock size={9} />
+                              Privado
+                            </span>
                           </span>
-                        </a>
-                      )}
-                      {project.demoUrl && (
-                        <a
-                          href={project.demoUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-foreground)] hover:text-indigo-400 transition-colors group"
-                        >
-                          Ver projeto online
-                          <span className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">
-                            ↗
-                          </span>
-                        </a>
-                      )}
+                        );
+                      })}
                     </div>
                   </div>
                 )}

@@ -25,6 +25,21 @@ export interface Profile {
   updatedAt: string;
 }
 
+export type ProjectLinkType =
+  | "frontend"
+  | "backend"
+  | "demo"
+  | "docs"
+  | "figma"
+  | "video"
+  | "other";
+
+export interface ProjectLink {
+  type: ProjectLinkType;
+  label?: string | null;
+  url?: string | null;
+}
+
 export interface Project {
   id: string;
   title: string;
@@ -32,8 +47,7 @@ export interface Project {
   description: string;
   content: string;
   coverImage: string | null;
-  githubUrl: string | null;
-  demoUrl: string | null;
+  links: ProjectLink[];
   featured: boolean;
   published: boolean;
   technologies: string[];
