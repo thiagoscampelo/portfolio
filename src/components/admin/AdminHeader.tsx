@@ -3,58 +3,62 @@
  *
  * Conteúdo:
  * - Botão hamburguer (só mobile) que abre o drawer da sidebar.
- * - Bloco de contexto: ícone de escudo + "Painel de Controle" + status
- *   "Sessão Autenticada" com dot verde pulsante.
+ * - Contexto da rota atual em formato de breadcrumb monoespaçado
+ *   ("Painel / Projetos"). Substitui o antigo bloco com escudo e
+ *   status "Sessão Autenticada", que duplicava informação.
  * - `AdminUserMenu` à direita (avatar, nome, dropdown).
  *
  * Comportamento:
  * - `sticky top-0 z-30` — fica fixo no topo da área de conteúdo.
- * - Backdrop blur para que o conteúdo role por baixo com transparência.
- *
- * Responsividade:
- * - `h-16` em mobile, `h-20` em tablet+.
- * - O bloco do escudo (`ShieldCheck`) esconde em telas muito pequenas
- *   para não competir com o hamburguer e o user menu.
+ * - Fundo quase opaco com blur discreto para o conteúdo passar por baixo.
  */
 import { ShieldCheck, Menu } from "lucide-react";
+import { useLocation } from "react-router-dom";
 import AdminUserMenu from "./AdminUserMenu";
 
 interface AdminHeaderProps {
   onOpenSidebar: () => void;
 }
 
+/** Rótulo da seção correspondente a cada rota do painel. */
+const SECTION_LABELS: Record<string, string> = {
+  "/": "Dashboard",
+  "/projetos": "Projetos",
+  "/experiencia": "Experiências",
+  "/educacao": "Formação",
+  "/habilidades": "Habilidades",
+  "/links-sociais": "Links sociais",
+  "/colaboracoes": "Colaborações",
+  "/analytics": "Analytics",
+  "/perfil": "Perfil",
+};
+
 export default function AdminHeader({ onOpenSidebar }: AdminHeaderProps) {
+  const { pathname } = useLocation();
+  const section = SECTION_LABELS[pathname] ?? "Painel";
+
   return (
-    <header className="sticky top-0 z-30 h-16 sm:h-20 w-full shrink-0 border-b border-[var(--color-border)]/50 bg-[var(--color-background)]/60 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all gap-4">
-      {/* Left: hamburguer + status */}
-      <div className="flex items-center gap-3 min-w-0">
-        {/* Hamburguer (só mobile) */}
+    <header className="sticky top-0 z-30 flex h-16 w-full shrink-0 items-center justify-between gap-4 border-b border-[var(--color-border)] bg-[var(--color-background)]/95 px-4 backdrop-blur-sm sm:px-6 lg:px-8">
+      <div className="flex min-w-0 items-center gap-3">
         <button
           type="button"
           onClick={onOpenSidebar}
           aria-label="Abrir menu"
-          className="lg:hidden flex items-center justify-center h-9 w-9 shrink-0 rounded-lg border border-[var(--color-border)] text-[var(--color-foreground)] hover:bg-[var(--color-card)] transition-colors"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-[var(--color-border)] text-[var(--color-muted)] transition-colors hover:border-brand/40 hover:text-brand lg:hidden"
         >
-          <Menu size={18} />
+          <Menu size={17} />
         </button>
 
-        <div className="flex items-center gap-3 min-w-0">
-          <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 shrink-0">
-            <ShieldCheck size={18} />
-          </div>
-          <div className="min-w-0">
-            <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)] block truncate">
-              Painel de Controle
-            </span>
-            <span className="text-xs text-emerald-400 font-medium flex items-center gap-1.5 mt-0.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Sessão Autenticada
-            </span>
-          </div>
+        <div className="flex min-w-0 items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
+          <ShieldCheck size={13} className="hidden shrink-0 sm:block" />
+          <span className="hidden sm:inline">Painel</span>
+          <span className="hidden text-[var(--color-border)] sm:inline">/</span>
+          <span className="truncate text-[var(--color-foreground)]">
+            {section}
+          </span>
         </div>
       </div>
 
-      {/* User menu */}
       <AdminUserMenu />
     </header>
   );

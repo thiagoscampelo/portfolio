@@ -48,7 +48,7 @@ export default function ExperienceTimelineFull({
             className="absolute top-4 bottom-0 left-1/2 w-px -translate-x-1/2 bg-[var(--color-border)]"
           />
         )}
-        <span className="relative z-10 mt-1.5 h-3 w-3 rounded-full border-2 border-indigo-500 bg-[var(--color-background)]" />
+        <span className="relative z-10 mt-1.5 h-3 w-3 rounded-full border-2 border-brand bg-[var(--color-background)]" />
       </div>
 
       {/* Conteúdo */}
@@ -61,7 +61,7 @@ export default function ExperienceTimelineFull({
           {experience.role}
         </h3>
 
-        <p className="mt-1 text-sm font-medium text-indigo-400">
+        <p className="mt-1 text-sm font-medium text-brand-deep">
           {experience.company}
         </p>
 

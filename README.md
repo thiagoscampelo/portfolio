@@ -396,20 +396,27 @@ O `App.tsx` detecta o prefixo `admin.` via `window.location.hostname` e renderiz
 
 ## 🎨 Design system
 
-Tokens de design em `src/index.css` via `@theme` (Tailwind v4):
+Tokens de design em `src/index.css` via `@theme` (Tailwind v4). Paleta
+completa, números de contraste e regras de uso em
+`TSCAMPELO_Paleta_de_Cores.md`.
 
-- **Paleta:** monocromática com acento **índigo**
+- **Paleta:** grafite `#1B1F23` + verde mineral `#38BF6B` como acento,
+  off-white `#F5F7F4` para fundos claros. Base do site/painel em
+  `#0D1113`, superfícies `#151B1E`, bordas `#2B3437`.
 - **Tipografia:** Inter, com escala editorial (H1 grande, labels em mono uppercase)
 - **Tema:** dark por padrão, variáveis `--color-*` para dark/light
 - **Padrões:**
-  - Labels de seção: `XX — NOME`
-  - Botão primário: `bg-indigo-600` + glow
-  - Bordas de seção: `border-[var(--color-border)]`
+  - Labels de seção: `XX — NOME` (e micro-labels mono com régua verde)
+  - Botão primário: `bg-brand` + `text-brand-contrast` (`brand-hover` em hover)
+  - Bordas de seção: `border-[var(--color-border)]` (hairline, raio 12px)
   - Entrada de elementos: Framer Motion com `whileInView` + `once: true`
+  - Logo: `LogoHorizontal` (inline, viewBox justo) nos headers; `BrandMark`
+    para o monograma isolado e o favicon
 
 ### Regra
 
-Nunca usar cores hardcoded (`bg-zinc-800`). Sempre via tokens (`bg-[var(--color-card)]`).
+Nunca usar cores hardcoded (`bg-zinc-800`). Sempre via tokens (`bg-[var(--color-card)]`),
+com a paleta da marca — indigo/roxo não existem mais no sistema.
 
 ---
 

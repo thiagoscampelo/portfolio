@@ -32,7 +32,7 @@ export default function ReorderButtons({
   disabled = false,
 }: ReorderButtonsProps) {
   const base =
-    "flex items-center justify-center h-5 w-5 rounded text-[var(--color-muted)] hover:text-indigo-400 hover:bg-indigo-500/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[var(--color-muted)]";
+    "flex items-center justify-center h-5 w-5 rounded text-[var(--color-muted)] hover:text-brand hover:bg-brand/10 transition-colors disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[var(--color-muted)]";
 
   return (
     <div className="inline-flex flex-col">

@@ -59,22 +59,22 @@ export default function About() {
     degree: {
       label: "Graduação",
       icon: GraduationCap,
-      badgeClass: "bg-indigo-500/10 text-indigo-400 border-indigo-500/20",
+      badgeClass: "bg-brand/10 text-brand-deep border-brand/25",
     },
     technical: {
       label: "Curso técnico",
       icon: Wrench,
-      badgeClass: "bg-violet-500/10 text-violet-400 border-violet-500/20",
+      badgeClass: "bg-[#1b1f23]/[0.06] text-[#54605b] border-[#1b1f23]/15",
     },
     certification: {
       label: "Certificação",
       icon: BadgeCheck,
-      badgeClass: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+      badgeClass: "bg-brand/10 text-brand-deep border-brand/25",
     },
     course: {
       label: "Curso livre",
       icon: BookOpen,
-      badgeClass: "bg-zinc-500/10 text-zinc-400 border-zinc-500/20",
+      badgeClass: "bg-[#1b1f23]/[0.06] text-[#54605b] border-[#1b1f23]/15",
     },
   };
 
@@ -131,7 +131,7 @@ export default function About() {
                       className="h-full w-full object-cover"
                     />
                   ) : (
-                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-indigo-950/20 via-transparent to-transparent">
+                    <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-[#1b1f23]/30 via-transparent to-transparent">
                       <span className="text-xs font-medium text-[var(--color-muted)] uppercase tracking-wider">
                         [ Sua Foto ]
                       </span>
@@ -318,7 +318,7 @@ export default function About() {
                           <h3 className="text-xl font-semibold text-[var(--color-foreground)]">
                             {edu.course}
                           </h3>
-                          <p className="text-sm font-medium text-indigo-400 mt-1">
+                          <p className="text-sm font-medium text-brand-deep mt-1">
                             {edu.institution}
                           </p>
                           {edu.description && (
@@ -374,7 +374,7 @@ export default function About() {
                   skills.map((skill) => (
                     <div
                       key={skill.id}
-                      className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4 text-center text-sm font-medium text-[var(--color-foreground)] hover:border-indigo-500/40 hover:bg-indigo-500/5 transition-colors duration-200"
+                      className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-4 text-center text-sm font-medium text-[var(--color-foreground)] hover:border-brand/40 hover:bg-brand/5 transition-colors duration-200"
                     >
                       {skill.name}
                     </div>
@@ -418,7 +418,7 @@ export default function About() {
                   {interests.map((interest) => (
                     <span
                       key={interest}
-                      className="text-sm font-medium text-[var(--color-foreground)] bg-[var(--color-card)] border border-[var(--color-border)] px-4 py-2 rounded-full hover:border-indigo-500/40 hover:bg-indigo-500/5 transition-colors duration-200"
+                      className="text-sm font-medium text-[var(--color-foreground)] bg-[var(--color-card)] border border-[var(--color-border)] px-4 py-2 rounded-full hover:border-brand/40 hover:bg-brand/5 transition-colors duration-200"
                     >
                       {interest}
                     </span>
@@ -452,12 +452,10 @@ export default function About() {
               <div className="flex flex-wrap items-center gap-4">
                 {profile?.resumeUrl && (
                   <motion.a
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.98 }}
                     href={profile.resumeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group inline-flex items-center gap-2.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-6 py-3 text-sm font-medium text-indigo-400 hover:bg-indigo-500/20 hover:border-indigo-500/50 transition-all"
+                    className="group inline-flex items-center gap-2.5 rounded-full border border-brand/30 bg-brand/10 px-6 py-3 text-sm font-medium text-brand-deep hover:bg-brand/20 hover:border-brand/50 transition-all"
                   >
                     <FileText size={16} />
                     <span>Meu currículo</span>
@@ -470,7 +468,7 @@ export default function About() {
 
                 <Link
                   to="/projetos"
-                  className="bg-indigo-600 rounded-full px-6 py-3 flex items-center text-sm font-medium text-white shadow-[0_0_40px_-5px_rgba(79,70,229,0.5)] hover:bg-indigo-500 hover:-translate-y-1 hover:shadow-[0_0_60px_-5px_rgba(99,102,241,0.8)] active:scale-[0.98] transition-all duration-300"
+                  className="bg-brand rounded-full px-6 py-3 flex items-center text-sm font-medium text-[#0d2119] hover:bg-brand-hover transition-colors duration-150"
                 >
                   Ver projetos
                 </Link>

@@ -294,38 +294,36 @@ export default function AdminProjects() {
   }
 
   return (
-    <div className="flex flex-col gap-8 max-w-7xl mx-auto pb-12">
+    <div className="flex flex-col gap-6 max-w-7xl mx-auto pb-12">
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-xl shadow-xl relative overflow-hidden"
+        className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[var(--color-border)] pb-6"
       >
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)] mb-1">
-            <Layers size={14} className="text-indigo-400" />
+        <div>
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
+            <Layers size={14} className="text-brand" />
             <span>Gestão de Conteúdo</span>
           </div>
-          <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[var(--color-foreground)]">
+          <h1 className="mt-3 text-[1.75rem] font-medium tracking-[-0.035em] text-[var(--color-foreground)] sm:text-[2rem]">
             Projetos
           </h1>
-          <p className="mt-1 text-sm text-[var(--color-muted)]">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-muted)]">
             Organize, publique e gerencie as soluções exibidas em seu portfólio.
           </p>
 
           <div
-            className={`mt-3 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium ${isOverLimit
-                ? "bg-amber-500/10 border-amber-500/30 text-amber-400"
-                : "bg-indigo-500/10 border-indigo-500/20 text-indigo-400"
+            className={`mt-3 inline-flex items-center gap-2 rounded-md border px-2 py-1 font-mono text-[10px] uppercase tracking-[0.12em] ${
+              isOverLimit
+                ? "border-amber-500/30 bg-amber-500/10 text-amber-400"
+                : "border-brand/20 bg-brand/[0.06] text-brand"
               }`}
           >
-            <Star size={12} fill="currentColor" />
+            <Star size={11} fill="currentColor" />
             <span>
-              Destaques na Home: {featuredCount}/{HOME_FEATURED_LIMIT}
+              Destaques na home: {featuredCount}/{HOME_FEATURED_LIMIT}
             </span>
             {isOverLimit && (
-              <span className="text-amber-400/80">
+              <span className="normal-case tracking-normal text-amber-400/80">
                 — apenas os 3 primeiros aparecem
               </span>
             )}
@@ -333,37 +331,31 @@ export default function AdminProjects() {
         </div>
 
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
           onClick={handleOpenCreateModal}
-          className="relative z-10 flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-medium text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-500 transition-all border border-indigo-400/30 shrink-0"
+          className="flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-[13px] font-medium text-brand-contrast transition-colors hover:bg-brand-hover shrink-0"
         >
           <Plus size={18} /> Novo Projeto
         </motion.button>
 
-        <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
       </motion.div>
 
       {/* Tabela */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/30 backdrop-blur-xl shadow-2xl overflow-hidden"
+        className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden"
       >
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm border-collapse min-w-[760px]">
-            <thead className="border-b border-[var(--color-border)] bg-[var(--color-background)]/60 text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-muted)]">
+            <thead className="border-b border-[var(--color-border)] font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-[var(--color-muted)]">
               <tr>
-                <th className="px-6 py-4">Projeto</th>
-                <th className="px-6 py-4">Tecnologias</th>
-                <th className="px-6 py-4 text-center">Destaque</th>
-                <th className="px-6 py-4 text-center">Status</th>
-                <th className="px-6 py-4 text-right">Ações</th>
+                <th className="px-5 py-3.5">Projeto</th>
+                <th className="px-5 py-3.5">Tecnologias</th>
+                <th className="px-5 py-3.5 text-center">Destaque</th>
+                <th className="px-5 py-3.5 text-center">Status</th>
+                <th className="px-5 py-3.5 text-right">Ações</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-[var(--color-border)]/60">
+            <tbody className="divide-y divide-[var(--color-border)]">
               {loading ? (
                 Array.from({ length: 4 }).map((_, i) => (
                   <tr key={i} className="animate-pulse">
@@ -417,10 +409,10 @@ export default function AdminProjects() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.3, delay: index * 0.04 }}
-                      className="group hover:bg-[var(--color-background)]/40 transition-colors"
+                      className="group hover:bg-white/[0.02] transition-colors"
                     >
-                      <td className="px-6 py-4">
-                        <p className="font-semibold text-[var(--color-foreground)] group-hover:text-indigo-400 transition-colors">
+                      <td className="px-5 py-3.5">
+                        <p className="font-semibold text-[var(--color-foreground)] group-hover:text-brand transition-colors">
                           {p.title}
                         </p>
                         <p className="text-xs font-mono text-[var(--color-muted)] mt-0.5">
@@ -428,13 +420,13 @@ export default function AdminProjects() {
                         </p>
                       </td>
 
-                      <td className="px-6 py-4">
+                      <td className="px-5 py-3.5">
                         <div className="flex flex-wrap gap-1.5">
                           {p.technologies && p.technologies.length > 0 ? (
                             p.technologies.map((tech) => (
                               <span
                                 key={tech}
-                                className="rounded-full bg-[var(--color-background)]/80 px-2.5 py-0.5 text-[10px] font-medium text-[var(--color-muted)] border border-[var(--color-border)]"
+                                className="rounded-md border border-[var(--color-border)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--color-muted)]"
                               >
                                 {tech}
                               </span>
@@ -447,7 +439,7 @@ export default function AdminProjects() {
                         </div>
                       </td>
 
-                      <td className="px-6 py-4 text-center">
+                      <td className="px-5 py-3.5 text-center">
                         <motion.button
                           whileTap={{ scale: 0.85 }}
                           onClick={() => toggleFeatured(p)}
@@ -468,11 +460,11 @@ export default function AdminProjects() {
                         </motion.button>
                       </td>
 
-                      <td className="px-6 py-4 text-center">
+                      <td className="px-5 py-3.5 text-center">
                         <button
                           onClick={() => togglePublish(p)}
-                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-all ${p.published
-                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                          className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-[11px] font-medium transition-colors ${p.published
+                              ? "bg-brand/10 text-brand border-brand/20"
                               : "bg-zinc-500/10 text-zinc-400 border-zinc-500/20"
                             }`}
                         >
@@ -485,7 +477,7 @@ export default function AdminProjects() {
                         </button>
                       </td>
 
-                      <td className="px-6 py-4 text-right">
+                      <td className="px-5 py-3.5 text-right">
                         <div className="flex items-center justify-end gap-1.5">
                           <ReorderButtons
                             onMoveUp={() => reorder(projects, index, "up")}
@@ -496,20 +488,16 @@ export default function AdminProjects() {
                           />
 
                           <motion.button
-                            whileHover={{ scale: 1.08 }}
-                            whileTap={{ scale: 0.95 }}
                             onClick={() => handleOpenEditModal(p)}
-                            className="p-2 rounded-xl text-[var(--color-muted)] hover:text-indigo-400 hover:bg-indigo-500/10 border border-transparent hover:border-indigo-500/20 transition-all"
+                            className="p-2 rounded-md text-[var(--color-muted)] hover:text-brand hover:bg-brand/10 border border-transparent hover:border-brand/20 transition-all"
                             title="Editar"
                           >
                             <Pencil size={16} />
                           </motion.button>
 
                           <motion.button
-                            whileHover={{ scale: 1.08 }}
-                            whileTap={{ scale: 0.95 }}
                             onClick={() => handleDelete(p)}
-                            className="p-2 rounded-xl text-[var(--color-muted)] hover:text-red-400 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all"
+                            className="p-2 rounded-md text-[var(--color-muted)] hover:text-red-400 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all"
                             title="Excluir"
                           >
                             <Trash2 size={16} />
@@ -534,7 +522,7 @@ export default function AdminProjects() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-black/70 backdrop-blur-md"
+              className="absolute inset-0 bg-black/75 backdrop-blur-sm"
             />
 
             <motion.div
@@ -542,21 +530,21 @@ export default function AdminProjects() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="relative w-full max-w-2xl max-h-[85vh] flex flex-col rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/90 backdrop-blur-2xl shadow-2xl overflow-hidden z-10"
+              className="relative w-full max-w-2xl max-h-[85vh] flex flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-2xl shadow-black/40 overflow-hidden z-10"
             >
-              <div className="p-6 border-b border-[var(--color-border)] bg-[var(--color-card)] flex items-center justify-between shrink-0">
+              <div className="flex items-center justify-between border-b border-[var(--color-border)] p-5 shrink-0">
                 <div>
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-400 block mb-0.5">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-brand block mb-1">
                     {editingProject ? "Edição" : "Novo Cadastro"}
                   </span>
-                  <h2 className="text-xl font-semibold text-[var(--color-foreground)]">
+                  <h2 className="text-lg font-medium tracking-[-0.02em] text-[var(--color-foreground)]">
                     {editingProject ? "Editar Projeto" : "Novo Projeto"}
                   </h2>
                 </div>
 
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="p-2 rounded-xl text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-background)] transition"
+                  className="rounded-md p-2 text-[var(--color-muted)] transition-colors hover:bg-white/[0.04] hover:text-[var(--color-foreground)]"
                 >
                   <X size={18} />
                 </button>
@@ -569,12 +557,12 @@ export default function AdminProjects() {
               >
                 {/* Imagem de capa */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                  <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                     Imagem de Capa
                   </label>
 
                   <div className="flex flex-col sm:flex-row gap-4 items-start">
-                    <div className="relative aspect-[16/10] w-full sm:w-48 shrink-0 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 overflow-hidden flex items-center justify-center">
+                    <div className="relative aspect-[16/10] w-full sm:w-48 shrink-0 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] overflow-hidden flex items-center justify-center">
                       {coverImage ? (
                         <img
                           src={coverImage}
@@ -590,12 +578,12 @@ export default function AdminProjects() {
                     </div>
 
                     <div className="flex-1 w-full flex items-center gap-2">
-                      <label className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-3 text-sm text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-indigo-500 cursor-pointer transition">
+                      <label className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-3 text-sm text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-brand cursor-pointer transition">
                         {uploadingCover ? (
                           <>
                             <Loader2
                               size={16}
-                              className="animate-spin text-indigo-400"
+                              className="animate-spin text-brand"
                             />
                             <span>Carregando...</span>
                           </>
@@ -634,7 +622,7 @@ export default function AdminProjects() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Título
                     </label>
                     <input
@@ -642,12 +630,12 @@ export default function AdminProjects() {
                       required
                       value={title}
                       onChange={(e) => handleTitleChange(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-brand focus:ring-1 focus:ring-brand transition"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Slug
                     </label>
                     <input
@@ -655,13 +643,13 @@ export default function AdminProjects() {
                       required
                       value={slug}
                       onChange={(e) => setSlug(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm font-mono text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm font-mono text-[var(--color-foreground)] outline-none focus:border-brand focus:ring-1 focus:ring-brand transition"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                  <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                     Descrição Curta
                   </label>
                   <input
@@ -669,12 +657,12 @@ export default function AdminProjects() {
                     required
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-brand focus:ring-1 focus:ring-brand transition"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                  <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                     Conteúdo Detalhado (suporta markdown)
                   </label>
                   <textarea
@@ -682,7 +670,7 @@ export default function AdminProjects() {
                     required
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition font-mono"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-brand focus:ring-1 focus:ring-brand transition font-mono"
                   />
                   <p className="mt-2 text-xs text-[var(--color-muted)]">
                     Use `##` para títulos, `**negrito**`, `-` para listas e
@@ -693,13 +681,13 @@ export default function AdminProjects() {
                 {/* Editor de links */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)]">
+                    <label className="block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Links do projeto
                     </label>
                     <button
                       type="button"
                       onClick={handleAddLink}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)]/40 px-3 py-1.5 text-xs font-medium text-[var(--color-muted)] hover:text-indigo-400 hover:border-indigo-500/30 transition"
+                      className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)]/40 px-3 py-1.5 text-xs font-medium text-[var(--color-muted)] hover:text-brand hover:border-brand/30 transition"
                     >
                       <Plus size={13} />
                       Adicionar
@@ -735,7 +723,7 @@ export default function AdminProjects() {
                                 type: e.target.value as ProjectLinkType,
                               })
                             }
-                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                           >
                             {PROJECT_LINK_TYPES.map((t) => (
                               <option
@@ -756,7 +744,7 @@ export default function AdminProjects() {
                             onChange={(e) =>
                               handleUpdateLink(index, { label: e.target.value })
                             }
-                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                           />
 
                           {/* URL */}
@@ -767,7 +755,7 @@ export default function AdminProjects() {
                             onChange={(e) =>
                               handleUpdateLink(index, { url: e.target.value })
                             }
-                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                            className="rounded-lg border border-[var(--color-border)] bg-[var(--color-card)]/60 px-2 py-1.5 text-xs text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                           />
 
                           {/* Ações */}
@@ -776,7 +764,7 @@ export default function AdminProjects() {
                               type="button"
                               onClick={() => handleMoveLink(index, "up")}
                               disabled={index === 0}
-                              className="p-1.5 rounded-lg text-[var(--color-muted)] hover:text-indigo-400 hover:bg-indigo-500/10 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[var(--color-muted)] transition"
+                              className="p-1.5 rounded-lg text-[var(--color-muted)] hover:text-brand hover:bg-brand/10 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[var(--color-muted)] transition"
                               title="Mover para cima"
                             >
                               <svg
@@ -796,7 +784,7 @@ export default function AdminProjects() {
                               type="button"
                               onClick={() => handleMoveLink(index, "down")}
                               disabled={index === links.length - 1}
-                              className="p-1.5 rounded-lg text-[var(--color-muted)] hover:text-indigo-400 hover:bg-indigo-500/10 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[var(--color-muted)] transition"
+                              className="p-1.5 rounded-lg text-[var(--color-muted)] hover:text-brand hover:bg-brand/10 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-[var(--color-muted)] transition"
                               title="Mover para baixo"
                             >
                               <svg
@@ -828,7 +816,7 @@ export default function AdminProjects() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                  <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                     Tecnologias (separadas por vírgula)
                   </label>
                   <input
@@ -836,7 +824,7 @@ export default function AdminProjects() {
                     placeholder="React, TypeScript, Tailwind CSS"
                     value={technologiesInput}
                     onChange={(e) => setTechnologiesInput(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-brand focus:ring-1 focus:ring-brand transition"
                   />
                 </div>
 
@@ -846,7 +834,7 @@ export default function AdminProjects() {
                       type="checkbox"
                       checked={published}
                       onChange={(e) => setPublished(e.target.checked)}
-                      className="h-4 w-4 rounded accent-indigo-600"
+                      className="h-4 w-4 rounded accent-brand"
                     />
                     Publicado
                   </label>
@@ -856,7 +844,7 @@ export default function AdminProjects() {
                       type="checkbox"
                       checked={featured}
                       onChange={(e) => setFeatured(e.target.checked)}
-                      className="h-4 w-4 rounded accent-indigo-600"
+                      className="h-4 w-4 rounded accent-brand"
                     />
                     Destacar na Home
                   </label>
@@ -867,7 +855,7 @@ export default function AdminProjects() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="rounded-xl px-4 py-2.5 text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition"
+                  className="rounded-lg px-4 py-2.5 text-sm font-medium text-[var(--color-muted)] transition-colors hover:bg-white/[0.04] hover:text-[var(--color-foreground)]"
                 >
                   Cancelar
                 </button>
@@ -876,7 +864,7 @@ export default function AdminProjects() {
                   type="submit"
                   form="project-form"
                   disabled={saving || uploadingCover}
-                  className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition disabled:opacity-50"
+                  className="rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-brand-contrast transition-colors hover:bg-brand-hover disabled:opacity-50"
                 >
                   {saving ? "Salvando..." : "Salvar Projeto"}
                 </button>

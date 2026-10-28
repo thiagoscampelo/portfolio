@@ -63,12 +63,10 @@ export default function ExperiencePreview() {
 
           {profile?.resumeUrl && (
             <motion.a
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.98 }}
               href={profile.resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-6 py-3 text-sm font-medium text-indigo-400 hover:bg-indigo-500/20 hover:border-indigo-500/50 transition-all shadow-sm group shrink-0"
+              className="inline-flex items-center gap-2.5 rounded-full border border-brand/30 bg-brand/10 px-6 py-3 text-sm font-medium text-brand-deep hover:bg-brand/20 hover:border-brand/50 transition-colors group shrink-0"
             >
               <FileText
                 size={16}

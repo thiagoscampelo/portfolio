@@ -68,19 +68,15 @@ export default function AdminLayout() {
   }, [isSidebarOpen]);
 
   return (
-    <div className="h-screen w-screen flex bg-[var(--color-background)] text-[var(--color-foreground)] relative overflow-hidden selection:bg-indigo-500 selection:text-white">
-      {/* Luzes decorativas */}
-      <div className="fixed top-0 left-1/4 w-96 h-96 bg-indigo-600/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="fixed bottom-0 right-1/4 w-96 h-96 bg-violet-600/5 rounded-full blur-[120px] pointer-events-none" />
-
+    <div className="flex h-screen w-screen overflow-hidden bg-[var(--color-background)] text-[var(--color-foreground)] selection:bg-brand selection:text-brand-contrast">
       <AdminSidebar
         isOpen={isSidebarOpen}
         onClose={() => setIsSidebarOpen(false)}
       />
 
-      <div className="flex-1 flex flex-col h-screen min-w-0 overflow-y-auto relative">
+      <div className="flex h-screen min-w-0 flex-1 flex-col overflow-y-auto">
         <AdminHeader onOpenSidebar={() => setIsSidebarOpen(true)} />
-        <main className="p-4 sm:p-6 lg:p-8 flex-1 relative">
+        <main className="flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
           <Outlet />
         </main>
       </div>

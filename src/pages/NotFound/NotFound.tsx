@@ -49,7 +49,7 @@ export default function NotFound() {
         </p>
         <Link
           to="/"
-          className="mt-10 bg-indigo-600 rounded-full px-8 h-12 flex items-center text-sm font-medium text-white shadow-[0_0_40px_-5px_rgba(79,70,229,0.5)] hover:bg-indigo-500 hover:-translate-y-1 hover:shadow-[0_0_60px_-5px_rgba(99,102,241,0.8)] active:scale-[0.98] transition-all duration-300"
+          className="mt-10 bg-brand rounded-full px-8 h-12 flex items-center text-sm font-medium text-[#0d2119] hover:bg-brand-hover transition-colors duration-150"
         >
           {content.notfound_button || "Voltar para a Home"}
         </Link>

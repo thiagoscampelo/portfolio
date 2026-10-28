@@ -59,7 +59,7 @@ export default function AboutPreview() {
             <div className="pt-4">
               <Link
                 to="/sobre"
-                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-foreground)] hover:text-indigo-400 transition-colors group"
+                className="inline-flex items-center gap-2 text-sm font-medium text-[var(--color-foreground)] hover:text-brand-deep transition-colors group"
               >
                 Conheça minha trajetória
                 <span className="transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">

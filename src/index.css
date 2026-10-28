@@ -3,17 +3,24 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-background: #f8fafc;
-  --color-foreground: #0f172a;
-  --color-muted: #64748b;
-  --color-muted-foreground: #94a3b8;
-  --color-border: #e2e8f0;
-  --color-accent: #4f46e5;
-  --color-accent-foreground: #ffffff;
+  --color-background: #f5f7f4;
+  --color-foreground: #1b1f23;
+  --color-muted: #6d7570;
+  --color-muted-foreground: #a7a7a7;
+  --color-border: #e1e6e2;
+  --color-accent: #38bf6b;
+  --color-accent-foreground: #0d2119;
   --color-card: #ffffff;
-  --color-card-foreground: #0f172a;
+  --color-card-foreground: #1b1f23;
 
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Marca TSCAMPELO — ver TSCAMPELO_Paleta_de_Cores.md */
+  --color-brand: #38bf6b;
+  --color-brand-hover: #58d6a4;
+  --color-brand-deep: #176b50;
+  --color-brand-contrast: #0d2119;
+  --color-graphite: #1b1f23;
 }
 
 @layer base {
@@ -24,15 +31,37 @@
   .dark {
     color-scheme: dark;
 
-    --color-background: #060b16;
-    --color-foreground: #e2e8f0;
-    --color-muted: #94a3b8;
-    --color-muted-foreground: #64748b;
-    --color-border: #1e293b;
-    --color-accent: #818cf8;
-    --color-accent-foreground: #060b16;
-    --color-card: #0f172a;
-    --color-card-foreground: #e2e8f0;
+    /* Paleta TSCAMPELO — mesma base do painel (grafite + verde mineral) */
+    --color-background: #0d1113;
+    --color-foreground: #f5f7f4;
+    --color-muted: #a7b2ad;
+    --color-muted-foreground: #7d8a84;
+    --color-border: #2b3437;
+    --color-accent: #38bf6b;
+    --color-accent-foreground: #0d2119;
+    --color-card: #151b1e;
+    --color-card-foreground: #f5f7f4;
+  }
+
+  /**
+   * Tema do painel administrativo — paleta TSCAMPELO.
+   *
+   * Fica em um wrapper próprio (`.admin-theme`, em `AdminApp`) para que o
+   * site público continue com o tema atual enquanto o admin usa grafite,
+   * verde mineral e bordas da marca.
+   */
+  .admin-theme {
+    color-scheme: dark;
+
+    --color-background: #0d1113;
+    --color-foreground: #f5f7f4;
+    --color-muted: #a7b2ad;
+    --color-muted-foreground: #7d8a84;
+    --color-border: #2b3437;
+    --color-accent: #38bf6b;
+    --color-accent-foreground: #0d2119;
+    --color-card: #151b1e;
+    --color-card-foreground: #f5f7f4;
   }
 
   * {
@@ -80,6 +109,32 @@
   }
 }
 
+/**
+ * Fundo da tela de login — grafite do painel com glows discretos da
+ * marca (verde mineral profundo em cima, brand bem sutil embaixo) e um
+ * grid técnico em 64px. Mantém o card legível sem virar landing page.
+ */
+.login-bg {
+  background-image:
+    radial-gradient(
+      ellipse 55% 45% at 8% 0%,
+      rgba(23, 107, 80, 0.22),
+      transparent 62%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 100% 100%,
+      rgba(56, 191, 107, 0.08),
+      transparent 65%
+    ),
+    linear-gradient(to right, rgba(43, 52, 55, 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(43, 52, 55, 0.5) 1px, transparent 1px);
+  background-size:
+    auto,
+    auto,
+    64px 64px,
+    64px 64px;
+}
+
 /* Custom Scrollbar - Estética Minimalista e Discreta */
 ::-webkit-scrollbar {
   width: 8px;
@@ -91,17 +146,18 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: color-mix(in srgb, var(--color-foreground) 18%, transparent);
   border-radius: 9999px;
   border: 2px solid var(--color-background);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: color-mix(in srgb, var(--color-foreground) 30%, transparent);
 }
 
 /* Suporte para Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.15) var(--color-background);
+  scrollbar-color: color-mix(in srgb, var(--color-foreground) 18%, transparent)
+    var(--color-background);
 }

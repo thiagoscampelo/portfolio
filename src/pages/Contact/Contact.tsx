@@ -130,11 +130,11 @@ export default function Contact() {
                   </span>
                   <a
                     href={`mailto:${email}`}
-                    className="group inline-flex items-center gap-3 text-2xl sm:text-3xl font-medium text-[var(--color-foreground)] hover:text-indigo-400 transition-colors border-b border-[var(--color-border)] hover:border-indigo-400 pb-2 break-all"
+                    className="group inline-flex items-center gap-3 text-2xl sm:text-3xl font-medium text-[var(--color-foreground)] hover:text-brand-deep transition-colors border-b border-[var(--color-border)] hover:border-brand-deep pb-2 break-all"
                   >
                     <Mail
                       size={22}
-                      className="shrink-0 text-[var(--color-muted)] group-hover:text-indigo-400 transition-colors"
+                      className="shrink-0 text-[var(--color-muted)] group-hover:text-brand-deep transition-colors"
                     />
                     <span>{email}</span>
                     <span className="text-xl transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">
@@ -166,7 +166,7 @@ export default function Contact() {
                           href={normalizeSocialUrl(link.platform, link.url)}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-3 p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] hover:border-indigo-500/40 hover:bg-indigo-500/5 transition-colors duration-200 group"
+                          className="flex items-center gap-3 p-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] hover:border-brand/40 hover:bg-brand/5 transition-colors duration-200 group"
                         >
                           <SocialIcon
                             as="span"
@@ -259,9 +259,9 @@ export default function Contact() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, margin: "-50px" }}
                         transition={{ duration: 0.5, delay: 0.05 + index * 0.05 }}
-                        className="group flex flex-col gap-3 p-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-sm hover:border-indigo-500/40 hover:bg-indigo-500/[0.03] transition-all duration-200"
+                        className="group flex flex-col gap-3 p-5 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] hover:border-brand/40 hover:bg-brand/[0.03] transition-all duration-200"
                       >
-                        <h3 className="text-lg font-semibold tracking-[-0.01em] text-[var(--color-foreground)] group-hover:text-indigo-400 transition-colors">
+                        <h3 className="text-lg font-semibold tracking-[-0.01em] text-[var(--color-foreground)] group-hover:text-brand-deep transition-colors">
                           {collab.title}
                         </h3>
                         <p className="text-sm leading-relaxed text-[var(--color-muted)]">

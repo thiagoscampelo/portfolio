@@ -21,7 +21,7 @@ export default function AppLoading() {
         <div
           aria-label="Carregando"
           role="status"
-          className="h-8 w-8 rounded-full border-2 border-[var(--color-border)] border-t-indigo-500 animate-spin"
+          className="h-8 w-8 rounded-full border-2 border-[var(--color-border)] border-t-[var(--color-accent)] animate-spin"
         />
         <span className="text-[10px] font-mono uppercase tracking-[0.22em] text-[var(--color-muted)]">
           Carregando

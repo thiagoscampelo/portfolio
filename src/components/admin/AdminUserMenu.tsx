@@ -22,7 +22,12 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, LogOut, User as UserIcon } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  LogOut,
+  User as UserIcon,
+} from "lucide-react";
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../hooks/useAuth";
 import { useProfile } from "../../hooks/useProfile";
@@ -106,10 +111,15 @@ export default function AdminUserMenu() {
         onClick={() => setIsOpen((v) => !v)}
         aria-haspopup="menu"
         aria-expanded={isOpen}
-        className="flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]/40 hover:bg-[var(--color-card)]/70 px-2 py-1.5 pr-3 transition-colors"
+        aria-label="Menu da conta"
+        className={`group flex items-center gap-2 rounded-md border py-1 pl-1 pr-2 transition-colors focus-visible:outline-none ${
+          isOpen
+            ? "border-brand/40 bg-white/[0.03]"
+            : "border-[var(--color-border)] bg-transparent hover:border-brand/35 hover:bg-white/[0.02]"
+        }`}
       >
         {/* Avatar */}
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full overflow-hidden bg-indigo-500/10 border border-indigo-500/20 text-[11px] font-semibold text-indigo-400">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center overflow-hidden rounded-full border border-brand/20 bg-brand/10 text-[10px] font-semibold text-brand">
           {avatarUrl ? (
             <img
               src={avatarUrl}
@@ -117,22 +127,17 @@ export default function AdminUserMenu() {
               className="h-full w-full object-cover"
             />
           ) : (
-            initials || <UserIcon size={14} />
+            initials || <UserIcon size={13} />
           )}
         </span>
 
         {/* Nome */}
-        <span className="hidden sm:flex flex-col items-start leading-tight max-w-[160px]">
-          <span className="text-xs font-medium text-[var(--color-foreground)] truncate w-full text-left">
-            {name}
-          </span>
-          <span className="text-[10px] text-[var(--color-muted)] truncate w-full text-left">
-            {email}
-          </span>
+        <span className="hidden max-w-[140px] truncate text-[13px] text-[var(--color-foreground)] sm:block">
+          {name}
         </span>
 
         <ChevronDown
-          size={14}
+          size={13}
           className={`shrink-0 text-[var(--color-muted)] transition-transform duration-200 ${
             isOpen ? "rotate-180" : ""
           }`}
@@ -149,19 +154,36 @@ export default function AdminUserMenu() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="absolute right-0 top-[calc(100%+8px)] z-50 w-64 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/95 backdrop-blur-2xl shadow-2xl overflow-hidden"
+            className="absolute right-0 top-[calc(100%+8px)] z-50 w-72 origin-top-right overflow-hidden rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] shadow-2xl shadow-black/50"
           >
-            {/* Cabeçalho do dropdown */}
-            <div className="px-4 py-3 border-b border-[var(--color-border)]/60">
-              <p className="text-xs font-semibold text-[var(--color-foreground)] truncate">
-                {name}
-              </p>
-              <p
-                className="text-[11px] text-[var(--color-muted)] truncate mt-0.5"
-                title={email}
-              >
-                {email}
-              </p>
+            {/* Identidade */}
+            <div className="flex items-center gap-3 border-b border-[var(--color-border)] px-3.5 py-3.5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full border border-brand/20 bg-brand/10 text-[11px] font-semibold text-brand">
+                {avatarUrl ? (
+                  <img
+                    src={avatarUrl}
+                    alt={name}
+                    className="h-full w-full object-cover"
+                  />
+                ) : (
+                  initials || <UserIcon size={14} />
+                )}
+              </span>
+
+              <div className="min-w-0">
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-[var(--color-muted)]/80">
+                  Sessão ativa
+                </p>
+                <p className="mt-1 truncate text-[13px] font-medium text-[var(--color-foreground)]">
+                  {name}
+                </p>
+                <p
+                  className="truncate font-mono text-[10px] text-[var(--color-muted)]"
+                  title={email}
+                >
+                  {email}
+                </p>
+              </div>
             </div>
 
             {/* Itens */}
@@ -170,20 +192,29 @@ export default function AdminUserMenu() {
                 to="/perfil"
                 role="menuitem"
                 onClick={closeMenu}
-                className="flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-medium text-[var(--color-foreground)] hover:bg-[var(--color-background)]/60 transition-colors"
+                className="group flex items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] text-[var(--color-foreground)] outline-none transition-colors hover:bg-white/[0.04] focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-brand/40"
               >
-                <UserIcon size={15} className="text-[var(--color-muted)]" />
-                <span>Perfil</span>
+                <UserIcon
+                  size={14}
+                  className="shrink-0 text-[var(--color-muted)]"
+                />
+                <span className="flex-1">Perfil</span>
+                <ArrowUpRight
+                  size={12}
+                  className="shrink-0 text-[var(--color-muted)] opacity-0 transition-opacity group-hover:opacity-100"
+                />
               </Link>
+            </div>
 
+            <div className="border-t border-[var(--color-border)] p-1.5">
               <button
                 type="button"
                 role="menuitem"
                 onClick={handleSignOut}
-                className="w-full flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-medium text-red-400 hover:bg-red-500/10 transition-colors"
+                className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-[13px] text-red-400 outline-none transition-colors hover:bg-red-500/10 focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-red-500/40"
               >
-                <LogOut size={15} />
-                <span>Sair</span>
+                <LogOut size={14} className="shrink-0" />
+                <span className="flex-1 text-left">Sair</span>
               </button>
             </div>
           </motion.div>

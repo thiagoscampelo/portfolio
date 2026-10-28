@@ -35,7 +35,7 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => handleClose(false)}
-              className="absolute inset-0 bg-black/70 backdrop-blur-md"
+              className="absolute inset-0 bg-black/75 backdrop-blur-sm"
             />
 
             <motion.div
@@ -43,25 +43,25 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="relative w-full max-w-md rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/95 backdrop-blur-2xl shadow-2xl overflow-hidden z-10"
+              className="relative w-full max-w-md rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-2xl shadow-black/40 overflow-hidden z-10"
             >
               <div className="p-6">
                 <div className="flex items-start gap-4">
                   <div
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${
+                    className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border ${
                       state.variant === "danger"
                         ? "bg-red-500/10 border-red-500/20 text-red-400"
-                        : "bg-indigo-500/10 border-indigo-500/20 text-indigo-400"
+                        : "bg-brand/10 border-brand/20 text-brand"
                     }`}
                   >
                     <AlertTriangle size={18} />
                   </div>
 
                   <div className="flex-1">
-                    <h2 className="text-lg font-semibold text-[var(--color-foreground)]">
+                    <h2 className="text-base font-medium tracking-[-0.01em] text-[var(--color-foreground)]">
                       {state.title}
                     </h2>
-                    <p className="mt-1 text-sm text-[var(--color-muted)] leading-relaxed">
+                    <p className="mt-2 text-sm leading-relaxed text-[var(--color-muted)]">
                       {state.message}
                     </p>
                   </div>
@@ -71,17 +71,17 @@ export function ConfirmProvider({ children }: { children: ReactNode }) {
               <div className="p-4 px-6 border-t border-[var(--color-border)] bg-[var(--color-card)] flex items-center justify-end gap-3">
                 <button
                   onClick={() => handleClose(false)}
-                  className="rounded-xl px-4 py-2.5 text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition"
+                  className="rounded-lg px-4 py-2.5 text-sm font-medium text-[var(--color-muted)] transition-colors hover:bg-white/[0.04] hover:text-[var(--color-foreground)]"
                 >
                   {state.cancelText || "Cancelar"}
                 </button>
 
                 <button
                   onClick={() => handleClose(true)}
-                  className={`rounded-xl px-6 py-2.5 text-sm font-medium text-white shadow-lg transition ${
+                  className={`rounded-lg px-5 py-2.5 text-sm font-medium transition-colors ${
                     state.variant === "danger"
-                      ? "bg-red-600 hover:bg-red-500 shadow-red-600/20"
-                      : "bg-indigo-600 hover:bg-indigo-500 shadow-indigo-600/20"
+                      ? "bg-red-600 text-white hover:bg-red-500"
+                      : "bg-brand text-brand-contrast hover:bg-brand-hover"
                   }`}
                 >
                   {state.confirmText || "Confirmar"}

@@ -18,9 +18,9 @@ const DEVICE_META: Record<
   string,
   { label: string; icon: LucideIcon; color: string }
 > = {
-  mobile: { label: "Mobile", icon: Smartphone, color: "#818cf8" },
-  tablet: { label: "Tablet", icon: Tablet, color: "#a78bfa" },
-  desktop: { label: "Desktop", icon: Monitor, color: "#6366f1" },
+  mobile: { label: "Mobile", icon: Smartphone, color: "#38bf6b" },
+  tablet: { label: "Tablet", icon: Tablet, color: "#58d6a4" },
+  desktop: { label: "Desktop", icon: Monitor, color: "#a7b2ad" },
   unknown: { label: "Outro", icon: HelpCircle, color: "#64748b" },
 };
 
@@ -31,26 +31,26 @@ export default function DeviceSplit({
   const total = data.reduce((sum, d) => sum + Number(d.views), 0);
 
   return (
-    <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-xl p-5">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)] mb-4">
+    <div className="overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]">
+      <h3 className="border-b border-[var(--color-border)] px-5 py-4 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
         Dispositivos
       </h3>
 
       {loading ? (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 p-5">
           {Array.from({ length: 3 }).map((_, i) => (
             <div
               key={i}
-              className="h-6 bg-[var(--color-border)]/40 rounded animate-pulse"
+              className="h-6 animate-pulse rounded bg-[var(--color-border)]/40"
             />
           ))}
         </div>
       ) : data.length === 0 || total === 0 ? (
-        <p className="text-sm text-[var(--color-muted)] py-4">
+        <p className="p-5 text-sm text-[var(--color-muted)]">
           Sem dados no período.
         </p>
       ) : (
-        <ul className="flex flex-col gap-3">
+        <ul className="flex flex-col gap-4 p-5">
           {data.map((entry) => {
             const meta = DEVICE_META[entry.device] ?? DEVICE_META.unknown;
             const Icon = meta.icon;
@@ -58,17 +58,17 @@ export default function DeviceSplit({
 
             return (
               <li key={entry.device}>
-                <div className="flex items-center justify-between mb-1.5">
-                  <span className="flex items-center gap-2 text-xs font-medium text-[var(--color-foreground)]">
-                    <Icon size={14} className="text-[var(--color-muted)]" />
+                <div className="mb-2 flex items-center justify-between gap-3">
+                  <span className="flex items-center gap-2 text-xs text-[var(--color-foreground)]">
+                    <Icon size={13} className="text-[var(--color-muted)]" />
                     {meta.label}
                   </span>
-                  <span className="text-xs text-[var(--color-muted)] font-mono">
+                  <span className="font-mono text-[10px] uppercase tracking-[0.1em] tabular-nums text-[var(--color-muted)]">
                     {pct.toFixed(0)}% ·{" "}
                     {Number(entry.views).toLocaleString("pt-BR")}
                   </span>
                 </div>
-                <div className="h-1.5 w-full rounded-full bg-[var(--color-border)]/40 overflow-hidden">
+                <div className="h-[3px] w-full overflow-hidden rounded-full bg-[var(--color-border)]">
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{

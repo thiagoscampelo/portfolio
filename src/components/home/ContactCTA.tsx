@@ -61,7 +61,7 @@ export default function ContactCTA() {
           >
             <a
               href={`mailto:${email}`}
-              className="group inline-flex items-center gap-4 text-xl sm:text-2xl font-medium text-[var(--color-foreground)] hover:text-indigo-400 transition-colors border-b border-[var(--color-border)] hover:border-indigo-400 pb-2"
+              className="group inline-flex items-center gap-4 text-xl sm:text-2xl font-medium text-[var(--color-foreground)] hover:text-brand-deep transition-colors border-b border-[var(--color-border)] hover:border-brand-deep pb-2"
             >
               {email}
               <span className="text-lg transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">

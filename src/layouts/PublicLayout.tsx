@@ -43,19 +43,10 @@ export default function PublicLayout() {
       {/* Skip link */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-indigo-600 focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white focus:shadow-xl"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:rounded-lg focus:bg-brand focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[#0d2119] focus:shadow-xl"
       >
         Pular para o conteúdo
       </a>
-
-      {/* Blobs ambientes */}
-      <div
-        aria-hidden
-        className="pointer-events-none fixed inset-0 overflow-hidden z-0"
-      >
-        <div className="absolute -top-40 -left-40 h-[500px] w-[500px] rounded-full bg-indigo-500/[0.04] blur-3xl" />
-        <div className="absolute top-1/2 -right-40 h-[500px] w-[500px] rounded-full bg-indigo-600/[0.04] blur-3xl" />
-      </div>
 
       <Header />
       <main id="main-content" className="flex-1 relative z-10">

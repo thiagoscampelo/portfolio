@@ -273,73 +273,66 @@ export default function AdminProfile() {
     <div className="flex flex-col gap-8 max-w-5xl mx-auto pb-12">
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-xl shadow-xl relative overflow-hidden"
+        className="border-b border-[var(--color-border)] pb-6"
       >
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)] mb-1">
-            <User size={14} className="text-indigo-400" />
+        <div>
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
+            <User size={14} className="text-brand" />
             <span>Configurações</span>
           </div>
-          <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[var(--color-foreground)]">
+          <h1 className="mt-3 text-[1.75rem] font-medium tracking-[-0.035em] text-[var(--color-foreground)] sm:text-[2rem]">
             Perfil &amp; Conteúdo
           </h1>
-          <p className="mt-1 text-sm text-[var(--color-muted)]">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-muted)]">
             Gerencie suas informações pessoais, disponibilidade e chamadas de
             texto do portfólio.
           </p>
         </div>
 
-        <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
       </motion.div>
 
       {/* Tabs */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-[var(--color-border)]/60 pb-2">
+      <div className="flex flex-wrap items-end gap-x-6 gap-y-1 border-b border-[var(--color-border)]">
         <button
           type="button"
           onClick={() => setActiveTab("general")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium transition-all ${
+          className={`-mb-px flex items-center gap-2 border-b-2 pb-3 pt-1 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors ${
             activeTab === "general"
-              ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
-              : "text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card)]/50"
+              ? "border-brand text-[var(--color-foreground)]"
+              : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
           }`}
         >
-          <User size={15} /> Informações Pessoais
+          <User size={13} /> Informações pessoais
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab("content")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium transition-all ${
+          className={`-mb-px flex items-center gap-2 border-b-2 pb-3 pt-1 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors ${
             activeTab === "content"
-              ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
-              : "text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card)]/50"
+              ? "border-brand text-[var(--color-foreground)]"
+              : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
           }`}
         >
-          <Type size={15} /> Textos da Home
+          <Type size={13} /> Textos da home
         </button>
 
         <button
           type="button"
           onClick={() => setActiveTab("pages")}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-medium transition-all ${
+          className={`-mb-px flex items-center gap-2 border-b-2 pb-3 pt-1 font-mono text-[10px] uppercase tracking-[0.18em] transition-colors ${
             activeTab === "pages"
-              ? "bg-indigo-600 text-white shadow-lg shadow-indigo-600/20"
-              : "text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card)]/50"
+              ? "border-brand text-[var(--color-foreground)]"
+              : "border-transparent text-[var(--color-muted)] hover:text-[var(--color-foreground)]"
           }`}
         >
-          <Layout size={15} /> Textos de Páginas
+          <Layout size={13} /> Textos de páginas
         </button>
       </div>
 
       {/* Form */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/30 backdrop-blur-xl shadow-2xl p-6 sm:p-8"
+        className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-6 sm:p-8"
       >
         {loading ? (
           <div className="flex flex-col gap-6 animate-pulse">
@@ -352,7 +345,7 @@ export default function AdminProfile() {
             {activeTab === "general" && (
               <div className="flex flex-col gap-6">
                 {/* Disponibilidade */}
-                <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.04] p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex flex-col gap-4 rounded-lg border border-[var(--color-border)] bg-white/[0.02] p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-sm font-semibold text-[var(--color-foreground)]">
                       Disponibilidade para projetos
@@ -368,7 +361,7 @@ export default function AdminProfile() {
                     aria-checked={available}
                     onClick={() => setAvailable((v) => !v)}
                     className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors shrink-0 ${
-                      available ? "bg-emerald-500" : "bg-zinc-600"
+                      available ? "bg-brand" : "bg-zinc-600"
                     }`}
                   >
                     <span
@@ -380,9 +373,9 @@ export default function AdminProfile() {
                 </div>
 
                 {/* Uploads */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pb-6 border-b border-[var(--color-border)]/60">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 pb-6 border-b border-[var(--color-border)]">
                   <div className="relative group shrink-0">
-                    <div className="h-20 w-20 rounded-2xl border border-[var(--color-border)] bg-[var(--color-background)] flex items-center justify-center overflow-hidden shadow-inner relative">
+                    <div className="h-20 w-20 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] flex items-center justify-center overflow-hidden shadow-inner relative">
                       {avatarUrl ? (
                         <img
                           src={avatarUrl}
@@ -400,16 +393,16 @@ export default function AdminProfile() {
 
                   <div className="flex-1 w-full grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                      <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                         Foto de Avatar
                       </label>
                       <div className="flex items-center gap-2">
-                        <label className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-indigo-500 cursor-pointer transition">
+                        <label className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-brand cursor-pointer transition">
                           {uploadingAvatar ? (
                             <>
                               <Loader2
                                 size={16}
-                                className="animate-spin text-indigo-400"
+                                className="animate-spin text-brand"
                               />
                               <span>Carregando...</span>
                             </>
@@ -446,16 +439,16 @@ export default function AdminProfile() {
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                      <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                         Currículo em PDF
                       </label>
                       <div className="flex items-center gap-2">
-                        <label className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-indigo-500 cursor-pointer transition">
+                        <label className="flex-1 flex items-center justify-center gap-2 rounded-xl border border-dashed border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:border-brand cursor-pointer transition">
                           {uploadingResume ? (
                             <>
                               <Loader2
                                 size={16}
-                                className="animate-spin text-indigo-400"
+                                className="animate-spin text-brand"
                               />
                               <span>Carregando...</span>
                             </>
@@ -494,7 +487,7 @@ export default function AdminProfile() {
                 {/* Nome + Cargo */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Nome Completo
                     </label>
                     <input
@@ -502,12 +495,12 @@ export default function AdminProfile() {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Cargo / Título Profissional
                     </label>
                     <input
@@ -515,7 +508,7 @@ export default function AdminProfile() {
                       required
                       value={role}
                       onChange={(e) => setRole(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
                 </div>
@@ -523,7 +516,7 @@ export default function AdminProfile() {
                 {/* Email + Localização */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       E-mail de Contato
                     </label>
                     <div className="relative">
@@ -532,7 +525,7 @@ export default function AdminProfile() {
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 pl-10 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 pl-10 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                       />
                       <Mail
                         size={16}
@@ -542,7 +535,7 @@ export default function AdminProfile() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Localização
                     </label>
                     <div className="relative">
@@ -550,7 +543,7 @@ export default function AdminProfile() {
                         type="text"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 pl-10 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 pl-10 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                       />
                       <MapPin
                         size={16}
@@ -562,7 +555,7 @@ export default function AdminProfile() {
 
                 {/* Bio */}
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                  <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                     Biografia Curta (Apresentação Básica)
                   </label>
                   <textarea
@@ -570,19 +563,19 @@ export default function AdminProfile() {
                     required
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                   />
                 </div>
 
                 {/* Contexto */}
-                <div className="pt-6 border-t border-[var(--color-border)]/60 flex flex-col gap-4">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+                <div className="pt-6 border-t border-[var(--color-border)] flex flex-col gap-4">
+                  <h3 className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     <Layout size={14} /> Contexto profissional
                   </h3>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                      <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                         Fuso Horário
                       </label>
                       <input
@@ -590,12 +583,12 @@ export default function AdminProfile() {
                         placeholder="UTC-3 · Brasil"
                         value={timezone}
                         onChange={(e) => setTimezone(e.target.value)}
-                        className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                      <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                         Tempo Médio de Resposta
                       </label>
                       <input
@@ -603,13 +596,13 @@ export default function AdminProfile() {
                         placeholder="~24h úteis"
                         value={responseTime}
                         onChange={(e) => setResponseTime(e.target.value)}
-                        className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Idiomas (separados por vírgula)
                     </label>
                     <input
@@ -617,14 +610,14 @@ export default function AdminProfile() {
                       placeholder="Português, Inglês"
                       value={languagesInput}
                       onChange={(e) => setLanguagesInput(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
                 </div>
 
                 {/* Interesses */}
-                <div className="pt-6 border-t border-[var(--color-border)]/60">
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                <div className="pt-6 border-t border-[var(--color-border)]">
+                  <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                     Interesses (separados por vírgula)
                   </label>
                   <input
@@ -632,7 +625,7 @@ export default function AdminProfile() {
                     placeholder="Open source, Design de produto, Performance web"
                     value={interestsInput}
                     onChange={(e) => setInterestsInput(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                   />
                   <p className="mt-2 text-xs text-[var(--color-muted)]">
                     Aparecem na seção de áreas de interesse da página Sobre.
@@ -644,13 +637,13 @@ export default function AdminProfile() {
             {/* ═══════════ ABA 2 — TEXTOS DA HOME ═══════════ */}
             {activeTab === "content" && (
               <div className="flex flex-col gap-6">
-                <div className="pb-6 border-b border-[var(--color-border)]/60 flex flex-col gap-4">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+                <div className="pb-6 border-b border-[var(--color-border)] flex flex-col gap-4">
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-brand flex items-center gap-2">
                     <Layout size={16} /> Seção Hero (Apresentação Principal)
                   </h3>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Título Principal (Hero)
                     </label>
                     <input
@@ -658,12 +651,12 @@ export default function AdminProfile() {
                       placeholder="Construindo software com propósito e atenção aos detalhes."
                       value={heroTitle}
                       onChange={(e) => setHeroTitle(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Subtítulo / Descrição de Destaque
                     </label>
                     <textarea
@@ -671,18 +664,18 @@ export default function AdminProfile() {
                       placeholder="Especializado em desenvolvimento de aplicações modernas..."
                       value={heroSubtitle}
                       onChange={(e) => setHeroSubtitle(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
                 </div>
 
-                <div className="pb-6 border-b border-[var(--color-border)]/60 flex flex-col gap-4">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+                <div className="pb-6 border-b border-[var(--color-border)] flex flex-col gap-4">
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-brand flex items-center gap-2">
                     <Layout size={16} /> Seção &ldquo;Sobre&rdquo;
                   </h3>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Título da Seção Sobre
                     </label>
                     <input
@@ -690,12 +683,12 @@ export default function AdminProfile() {
                       placeholder="Um pouco sobre mim."
                       value={aboutTitle}
                       onChange={(e) => setAboutTitle(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Filosofia / Parágrafo Complementar
                     </label>
                     <textarea
@@ -703,18 +696,18 @@ export default function AdminProfile() {
                       placeholder="Com experiência na construção de aplicações do zero..."
                       value={aboutPhilosophy}
                       onChange={(e) => setAboutPhilosophy(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-sm font-semibold uppercase tracking-wider text-indigo-400 flex items-center gap-2">
+                  <h3 className="text-sm font-semibold uppercase tracking-wider text-brand flex items-center gap-2">
                     <Layout size={16} /> Seção de Contato (CTA)
                   </h3>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Título da Seção de Contato
                     </label>
                     <input
@@ -722,12 +715,12 @@ export default function AdminProfile() {
                       placeholder="Vamos construir algo juntos?"
                       value={contactTitle}
                       onChange={(e) => setContactTitle(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                    <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                       Subtítulo do Contato
                     </label>
                     <textarea
@@ -735,7 +728,7 @@ export default function AdminProfile() {
                       placeholder="Estou sempre aberto a discutir novas oportunidades..."
                       value={contactSubtitle}
                       onChange={(e) => setContactSubtitle(e.target.value)}
-                      className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                     />
                   </div>
                 </div>
@@ -747,7 +740,7 @@ export default function AdminProfile() {
               <div className="flex flex-col gap-8">
                 {/* HOME */}
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     Home
                   </h3>
 
@@ -776,11 +769,11 @@ export default function AdminProfile() {
                   />
                 </div>
 
-                <div className="border-t border-[var(--color-border)]/60" />
+                <div className="border-t border-[var(--color-border)]" />
 
                 {/* PROJETOS */}
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     Página /projetos
                   </h3>
 
@@ -808,11 +801,11 @@ export default function AdminProfile() {
                   />
                 </div>
 
-                <div className="border-t border-[var(--color-border)]/60" />
+                <div className="border-t border-[var(--color-border)]" />
 
                 {/* EXPERIÊNCIA */}
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     Página /experiencia
                   </h3>
 
@@ -842,11 +835,11 @@ export default function AdminProfile() {
                   />
                 </div>
 
-                <div className="border-t border-[var(--color-border)]/60" />
+                <div className="border-t border-[var(--color-border)]" />
 
                 {/* SOBRE */}
                 <div className="flex flex-col gap-6">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     Página /sobre
                   </h3>
 
@@ -1003,11 +996,11 @@ export default function AdminProfile() {
                   </div>
                 </div>
 
-                <div className="border-t border-[var(--color-border)]/60" />
+                <div className="border-t border-[var(--color-border)]" />
 
                 {/* CONTATO */}
                 <div className="flex flex-col gap-6">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     Página /contato
                   </h3>
 
@@ -1116,11 +1109,11 @@ export default function AdminProfile() {
                   </div>
                 </div>
 
-                <div className="border-t border-[var(--color-border)]/60" />
+                <div className="border-t border-[var(--color-border)]" />
 
                 {/* 404 */}
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     Página 404
                   </h3>
 
@@ -1147,11 +1140,11 @@ export default function AdminProfile() {
                   />
                 </div>
 
-                <div className="border-t border-[var(--color-border)]/60" />
+                <div className="border-t border-[var(--color-border)]" />
 
                 {/* FOOTER */}
                 <div className="flex flex-col gap-4">
-                  <h3 className="text-xs font-semibold uppercase tracking-wider text-indigo-400">
+                  <h3 className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)]">
                     Footer
                   </h3>
 
@@ -1168,13 +1161,11 @@ export default function AdminProfile() {
             )}
 
             {/* Botão salvar */}
-            <div className="flex justify-end pt-4 border-t border-[var(--color-border)]/60">
+            <div className="flex justify-end pt-4 border-t border-[var(--color-border)]">
               <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
                 type="submit"
                 disabled={saving || uploadingAvatar || uploadingResume}
-                className="flex items-center gap-2 rounded-xl bg-indigo-600 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-500 transition-all disabled:opacity-50"
+                className="flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-brand-contrast transition-colors hover:bg-brand-hover disabled:opacity-50"
               >
                 <Save size={18} />
                 {saving
@@ -1214,7 +1205,7 @@ function PageTextInput({
 }: PageTextInputProps) {
   return (
     <div>
-      <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+      <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
         {label}
       </label>
       {multiline ? (
@@ -1223,7 +1214,7 @@ function PageTextInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
         />
       ) : (
         <input
@@ -1231,7 +1222,7 @@ function PageTextInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
         />
       )}
       {hint && <p className="mt-2 text-xs text-[var(--color-muted)]">{hint}</p>}

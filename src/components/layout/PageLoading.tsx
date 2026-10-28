@@ -20,7 +20,7 @@ export default function PageLoading() {
       <div
         aria-label="Carregando"
         role="status"
-        className="h-6 w-6 rounded-full border-2 border-[var(--color-border)] border-t-indigo-500 animate-spin"
+        className="h-6 w-6 rounded-full border-2 border-[var(--color-border)] border-t-[var(--color-accent)] animate-spin"
       />
     </div>
   );

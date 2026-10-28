@@ -4,7 +4,7 @@
  * Como funciona:
  * - viewBox fixo (800×220) → o SVG escala responsivamente via `width="100%"`.
  * - Cada barra ocupa uma "fatia" horizontal do gráfico.
- * - Barras com `rx` arredondado, preenchimento em gradiente indigo→violet.
+ * - Barras com `rx` arredondado, preenchimento em gradiente verde mineral.
  * - Tooltip nativo via `<title>` (hover no desktop, long-press no mobile).
  * - Datas mostradas de forma seletiva (primeira, meio, última) para evitar
  *   sobreposição em períodos longos (30/90 dias).
@@ -32,7 +32,7 @@ export default function ViewsChart({ data, height = 240 }: ViewsChartProps) {
   if (data.length === 0) {
     return (
       <div
-        className="flex items-center justify-center text-sm text-[var(--color-muted)] border border-dashed border-[var(--color-border)] rounded-2xl"
+        className="flex items-center justify-center text-sm text-[var(--color-muted)] border border-dashed border-[var(--color-border)] rounded-xl"
         style={{ height }}
       >
         Sem dados no período.
@@ -71,8 +71,8 @@ export default function ViewsChart({ data, height = 240 }: ViewsChartProps) {
         {/* Gradiente de preenchimento das barras */}
         <defs>
           <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#818cf8" />
-            <stop offset="100%" stopColor="#4f46e5" />
+            <stop offset="0%" stopColor="#58d6a4" />
+            <stop offset="100%" stopColor="#1c9261" />
           </linearGradient>
         </defs>
 

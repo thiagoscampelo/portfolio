@@ -73,7 +73,7 @@ export default function ProjectDetails() {
               </p>
               <Link
                 to="/projetos"
-                className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors group"
+                className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-brand-deep hover:text-brand transition-colors group"
               >
                 <span className="transition-transform duration-200 group-hover:-translate-x-1">
                   ←
@@ -136,7 +136,7 @@ export default function ProjectDetails() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="w-full max-h-[80vh] overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-sm flex items-center justify-center"
+              className="w-full max-h-[80vh] overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] flex items-center justify-center"
             >
               <SmartImage
                 src={project.coverImage}
@@ -204,11 +204,11 @@ export default function ProjectDetails() {
                               href={link.url!}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-2.5 text-sm font-medium text-[var(--color-foreground)] hover:text-indigo-400 transition-colors group"
+                              className="inline-flex items-center gap-2.5 text-sm font-medium text-[var(--color-foreground)] hover:text-brand-deep transition-colors group"
                             >
                               <Icon
                                 size={15}
-                                className="text-[var(--color-muted)] group-hover:text-indigo-400 transition-colors shrink-0"
+                                className="text-[var(--color-muted)] group-hover:text-brand-deep transition-colors shrink-0"
                               />
                               <span>{label}</span>
                               <ExternalLink

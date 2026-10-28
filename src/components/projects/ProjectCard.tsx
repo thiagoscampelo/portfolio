@@ -7,12 +7,12 @@
  * Estrutura:
  * - Thumbnail (aspect 16:10) com imagem de capa ou fallback tracejado.
  * - Número do item + seta ↗ (animada no hover).
- * - Título (com cor indigo no hover).
+ * - Título (com verde da marca no hover).
  * - Descrição truncada em 2 linhas.
  * - Tecnologias em chips (todas).
  *
  * Interações:
- * - Hover: imagem dá zoom (scale 105), título fica indigo, seta anima.
+ * - Hover: imagem dá zoom (scale 105), título fica verde, seta anima.
  * - Click: navega para `/projetos/:slug`.
  */
 import { motion } from "framer-motion";
@@ -37,7 +37,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     >
       <Link to={`/projetos/${project.slug}`} className="block">
         {/* Thumbnail */}
-        <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-sm relative">
+        <div className="aspect-[16/10] overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)] relative">
           <SmartImage
             src={project.coverImage}
             alt={project.title}
@@ -68,7 +68,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             </span>
           </div>
 
-          <h3 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-[var(--color-foreground)] group-hover:text-indigo-400 transition-colors">
+          <h3 className="mt-2 text-2xl font-semibold tracking-[-0.02em] text-[var(--color-foreground)] group-hover:text-brand-deep transition-colors">
             {project.title}
           </h3>
 

@@ -27,6 +27,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Container from "./Container";
+import LogoHorizontal from "../LogoHorizontal";
 import { useProfile } from "../../hooks/useProfile";
 
 export default function Header() {
@@ -44,7 +45,6 @@ export default function Header() {
     { label: "Contato", path: "/contato" },
   ];
 
-  const name = profile?.name || "Thiago Campelo";
   const isAvailable = profile?.available ?? true;
 
   function isRouteActive(path: string) {
@@ -98,12 +98,10 @@ export default function Header() {
         {/* Brand */}
         <Link
           to="/"
-          className="group flex items-center gap-3 font-semibold tracking-[-0.02em] text-base text-[var(--color-foreground)]"
+          className="group flex items-center"
+          aria-label="TSCAMPELO — página inicial"
         >
-          <span className="uppercase">{name}</span>
-          <span className="hidden sm:inline-block text-[10px] uppercase tracking-[0.2em] text-[var(--color-muted)] font-mono border border-[var(--color-border)] rounded-full px-2 py-0.5">
-            DEV
-          </span>
+          <LogoHorizontal className="h-10 w-auto sm:h-12 transition-opacity group-hover:opacity-80" />
         </Link>
 
         {/* Nav desktop */}
@@ -112,8 +110,8 @@ export default function Header() {
             <>
               <div className="hidden lg:flex items-center gap-2 text-xs font-medium text-[var(--color-muted)]">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
                 </span>
                 <span>Disponível para projetos</span>
               </div>
@@ -196,8 +194,8 @@ export default function Header() {
               {isAvailable && (
                 <div className="mt-4 pt-4 border-t border-[var(--color-border)] flex items-center gap-2 text-xs font-medium text-[var(--color-muted)]">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
                   </span>
                   <span>Disponível para projetos</span>
                 </div>

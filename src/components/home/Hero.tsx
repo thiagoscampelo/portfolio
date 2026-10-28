@@ -2,7 +2,7 @@
  * Hero — Seção de abertura da Home.
  *
  * Estrutura:
- * - Blobs indigo decorativos (2, estáticos em mobile, animados em desktop
+ * - Blobs verdes decorativos (2, estáticos em mobile, animados em desktop
  *   via `motion.div` com `repeat: Infinity`).
  * - Bloco de texto: role/label, título principal, subtítulo, CTAs.
  * - Avatar com animação de flutuação contínua.
@@ -39,18 +39,6 @@ export default function Hero() {
       id="inicio"
       className="relative overflow-hidden border-b border-[var(--color-border)]"
     >
-      {/* Blobs de fundo — sutis, somam à ambiência do PublicLayout */}
-      <motion.div
-        animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
-        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full bg-indigo-500/[0.04] blur-3xl"
-      />
-      <motion.div
-        animate={{ x: [0, -40, 0], y: [0, 30, 0] }}
-        transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute top-1/3 -right-24 h-96 w-96 rounded-full bg-indigo-600/[0.04] blur-3xl"
-      />
-
       <Container className="pt-10 pb-16 sm:pt-14 sm:pb-24">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
           {/* Texto */}
@@ -78,7 +66,7 @@ export default function Hero() {
             <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 to="/projetos"
-                className="bg-indigo-600 rounded-full px-8 h-12 flex items-center text-sm font-medium text-white shadow-[0_0_40px_-5px_rgba(79,70,229,0.5)] hover:bg-indigo-500 hover:-translate-y-1 hover:shadow-[0_0_60px_-5px_rgba(99,102,241,0.8)] active:scale-[0.98] transition-all duration-300"
+                className="bg-brand rounded-full px-8 h-12 flex items-center text-sm font-medium text-[#0d2119] hover:bg-brand-hover transition-colors duration-150"
               >
                 Ver projetos
               </Link>
@@ -102,12 +90,10 @@ export default function Hero() {
 
               {profile?.resumeUrl && (
                 <motion.a
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.98 }}
                   href={profile.resumeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 px-6 py-3 text-sm font-medium text-indigo-400 hover:bg-indigo-500/20 hover:border-indigo-500/50 transition-all"
+                  className="group inline-flex items-center gap-2.5 rounded-full border border-brand/30 bg-brand/10 px-6 py-3 text-sm font-medium text-brand-deep hover:bg-brand/20 hover:border-brand/50 transition-all"
                 >
                   <FileText size={16} />
                   <span>Meu currículo</span>
@@ -138,7 +124,7 @@ export default function Hero() {
                 priority
                 className="h-full w-full object-cover"
                 fallback={
-                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-indigo-950/40 via-transparent to-transparent">
+                  <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-tr from-[#1b1f23]/45 via-transparent to-transparent">
                     <span className="text-sm font-medium text-[var(--color-muted)] tracking-wider uppercase">
                       [ Sua Foto ]
                     </span>

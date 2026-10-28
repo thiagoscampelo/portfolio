@@ -169,26 +169,23 @@ export default function AdminAnalytics() {
     <div className="flex flex-col gap-6 max-w-7xl mx-auto pb-12">
       {/* ═══════════ HEADER ═══════════ */}
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-xl shadow-xl relative overflow-hidden"
+        className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 border-b border-[var(--color-border)] pb-6"
       >
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)] mb-1">
-            <BarChart3 size={14} className="text-indigo-400" />
+        <div>
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
+            <BarChart3 size={14} className="text-brand" />
             <span>Estatísticas</span>
           </div>
-          <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[var(--color-foreground)]">
+          <h1 className="mt-3 text-[1.75rem] font-medium tracking-[-0.035em] text-[var(--color-foreground)] sm:text-[2rem]">
             Analytics
           </h1>
-          <p className="mt-1 text-sm text-[var(--color-muted)]">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-muted)]">
             Acompanhe o tráfego do portfólio — views, visitantes, origem e
             comportamento.
           </p>
         </div>
 
-        <div className="relative z-10 flex flex-wrap items-center gap-2 shrink-0">
+        <div className="flex flex-wrap items-center gap-2 shrink-0">
           <PeriodFilter
             value={periodDays}
             onChange={setPeriodDays}
@@ -200,7 +197,7 @@ export default function AdminAnalytics() {
             disabled={loading}
             aria-label="Exportar CSV"
             title="Exportar dados em CSV"
-            className="flex items-center justify-center h-9 w-9 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]/40 text-[var(--color-muted)] hover:text-indigo-400 hover:border-indigo-500/30 transition-colors disabled:opacity-50"
+            className="flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] text-[var(--color-muted)] transition-colors hover:border-brand/40 hover:text-brand disabled:opacity-50"
           >
             <Download size={15} />
           </button>
@@ -209,18 +206,17 @@ export default function AdminAnalytics() {
             onClick={() => void refetch()}
             disabled={refreshing}
             aria-label="Atualizar dados"
-            className="flex items-center justify-center h-9 w-9 rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]/40 text-[var(--color-muted)] hover:text-indigo-400 hover:border-indigo-500/30 transition-colors disabled:opacity-50"
+            className="flex h-9 w-9 items-center justify-center rounded-md border border-[var(--color-border)] text-[var(--color-muted)] transition-colors hover:border-brand/40 hover:text-brand disabled:opacity-50"
           >
             <RefreshCw size={15} className={refreshing ? "animate-spin" : ""} />
           </button>
         </div>
 
-        <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
       </motion.div>
 
       {/* ═══════════ ERRO ═══════════ */}
       {error && (
-        <div className="rounded-2xl border border-red-500/20 bg-red-500/5 px-5 py-4 text-sm text-red-400">
+        <div className="rounded-xl border border-red-500/20 bg-red-500/5 px-5 py-4 text-sm text-red-400">
           {error}
         </div>
       )}
@@ -228,7 +224,7 @@ export default function AdminAnalytics() {
       {/* ═══════════ CARDS DE OVERVIEW ═══════════ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <AnalyticsStatCard
-          label="Views no período"
+          label="Views"
           value={stats.periodViews}
           delta={deltas.views}
           secondaryLabel="no total"
@@ -237,7 +233,7 @@ export default function AdminAnalytics() {
           loading={loading}
         />
         <AnalyticsStatCard
-          label="Visitantes no período"
+          label="Visitantes"
           value={stats.periodVisitors}
           delta={deltas.visitors}
           secondaryLabel="no total"
@@ -261,14 +257,11 @@ export default function AdminAnalytics() {
 
       {/* ═══════════ GRÁFICO ═══════════ */}
       <motion.div
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.05 }}
-        className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-xl p-5 sm:p-6"
+        className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] p-5 sm:p-6"
       >
         <div className="flex items-center justify-between mb-5">
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)]">
+            <h3 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
               Views por dia
             </h3>
             <p className="text-[11px] text-[var(--color-muted)]/70 mt-1">

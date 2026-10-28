@@ -65,13 +65,13 @@ export default function ProjectCardCompact({
             <span className="text-xs font-mono uppercase tracking-[0.18em] text-[var(--color-muted)]/60">
               {String(index + 1).padStart(2, "0")}
             </span>
-            <span className="text-lg text-[var(--color-muted)] group-hover:text-indigo-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">
+            <span className="text-lg text-[var(--color-muted)] group-hover:text-brand-deep transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1">
               ↗
             </span>
           </div>
 
           {/* Título */}
-          <h3 className="text-lg font-semibold tracking-[-0.02em] text-[var(--color-foreground)] leading-tight group-hover:text-indigo-400 transition-colors">
+          <h3 className="text-lg font-semibold tracking-[-0.02em] text-[var(--color-foreground)] leading-tight group-hover:text-brand-deep transition-colors">
             {project.title}
           </h3>
 

@@ -47,10 +47,10 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           {toasts.map((t) => {
             const borderColor =
               t.variant === "success"
-                ? "rgba(16,185,129,0.3)"
+                ? "rgba(56,191,107,0.35)"
                 : t.variant === "error"
                   ? "rgba(239,68,68,0.3)"
-                  : "rgba(99,102,241,0.3)";
+                  : "rgba(56,191,107,0.3)";
 
             return (
               <motion.div
@@ -60,19 +60,19 @@ export function ToastProvider({ children }: { children: ReactNode }) {
                 exit={{ opacity: 0, x: 40, scale: 0.95 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 style={{ borderColor }}
-                className="pointer-events-auto flex items-center gap-3 rounded-xl border bg-[var(--color-card)]/95 backdrop-blur-xl px-4 py-3 shadow-2xl min-w-[280px] max-w-md"
+                className="pointer-events-auto flex items-center gap-3 rounded-xl border bg-[var(--color-card)] shadow-2xl shadow-black/40 px-4 py-3 shadow-2xl min-w-[280px] max-w-md"
               >
                 {t.variant === "success" && (
                   <CheckCircle2
                     size={18}
-                    className="text-emerald-400 shrink-0"
+                    className="text-brand shrink-0"
                   />
                 )}
                 {t.variant === "error" && (
                   <AlertCircle size={18} className="text-red-400 shrink-0" />
                 )}
                 {t.variant === "info" && (
-                  <Info size={18} className="text-indigo-400 shrink-0" />
+                  <Info size={18} className="text-brand shrink-0" />
                 )}
 
                 <span className="text-sm text-[var(--color-foreground)] flex-1">

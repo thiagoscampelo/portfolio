@@ -1,8 +1,9 @@
 /**
  * PeriodFilter — Toggle de 7 / 30 / 90 dias para o dashboard.
  *
- * Segue o padrão visual dos "pills" já usados no admin (como as
- * tabs do AdminProfile): ativo = bg-indigo-600, inativo = muted.
+ * Visual: um único grupo com borda hairline e divisórias internas. O item
+ * ativo usa apenas fundo verde translúcido + texto verde — sem preenchimento
+ * sólido, para não competir com os botões de ação da página.
  */
 interface PeriodFilterProps {
   value: number;
@@ -22,7 +23,7 @@ export default function PeriodFilter({
   disabled = false,
 }: PeriodFilterProps) {
   return (
-    <div className="inline-flex items-center gap-1 p-1 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60">
+    <div className="inline-flex items-center overflow-hidden rounded-md border border-[var(--color-border)]">
       {OPTIONS.map((opt) => {
         const isActive = opt.value === value;
         return (
@@ -31,11 +32,11 @@ export default function PeriodFilter({
             type="button"
             onClick={() => onChange(opt.value)}
             disabled={disabled}
-            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+            className={`border-r border-[var(--color-border)] px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.12em] transition-colors last:border-r-0 ${
               isActive
-                ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/20"
-                : "text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-card)]/50"
-            } disabled:opacity-50 disabled:cursor-not-allowed`}
+                ? "bg-brand/[0.08] text-brand"
+                : "text-[var(--color-muted)] hover:bg-white/[0.03] hover:text-[var(--color-foreground)]"
+            } disabled:cursor-not-allowed disabled:opacity-50`}
           >
             {opt.label}
           </button>

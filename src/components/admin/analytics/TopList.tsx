@@ -35,48 +35,48 @@ export default function TopList({
   loading = false,
 }: TopListProps) {
   return (
-    <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-xl p-5">
-      <h3 className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-muted)] mb-4">
+    <div className="overflow-hidden rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]">
+      <h3 className="border-b border-[var(--color-border)] px-5 py-4 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
         {title}
       </h3>
 
       {loading ? (
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 p-5">
           {Array.from({ length: 4 }).map((_, i) => (
             <div
               key={i}
-              className="h-4 bg-[var(--color-border)]/40 rounded animate-pulse"
+              className="h-4 animate-pulse rounded bg-[var(--color-border)]/40"
             />
           ))}
         </div>
       ) : items.length === 0 ? (
-        <p className="text-sm text-[var(--color-muted)] py-4">{emptyMessage}</p>
+        <p className="p-5 text-sm text-[var(--color-muted)]">{emptyMessage}</p>
       ) : (
-        <ul className="flex flex-col gap-1">
+        <ul className="flex flex-col px-5 py-2">
           {items.map((item, index) => (
             <li
               key={item.label + index}
-              className="flex items-center gap-3 py-2 border-b border-[var(--color-border)]/40 last:border-b-0"
+              className="flex items-center gap-3 border-b border-[var(--color-border)] py-2.5 last:border-b-0"
             >
-              <span className="w-5 shrink-0 text-[10px] font-mono text-[var(--color-muted)]/60">
+              <span className="w-5 shrink-0 font-mono text-[10px] text-[var(--color-muted)]/60">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <span
-                className="flex-1 min-w-0 text-xs text-[var(--color-foreground)] truncate"
+                className="min-w-0 flex-1 truncate text-xs text-[var(--color-foreground)]"
                 title={item.tooltip ?? item.label}
               >
                 {item.label}
               </span>
               {item.tag && (
-                <span className="shrink-0 rounded-full border border-[var(--color-border)] bg-[var(--color-background)]/60 px-2 py-0.5 text-[9px] font-medium uppercase tracking-wider text-[var(--color-muted)]">
+                <span className="shrink-0 rounded-md border border-[var(--color-border)] px-1.5 py-0.5 font-mono text-[9px] uppercase tracking-[0.12em] text-[var(--color-muted)]">
                   {item.tag}
                 </span>
               )}
-              <span className="shrink-0 text-xs font-medium text-[var(--color-foreground)]">
+              <span className="shrink-0 font-mono text-xs tabular-nums text-[var(--color-foreground)]">
                 {item.value.toLocaleString("pt-BR")}
               </span>
               {item.secondary !== undefined && (
-                <span className="shrink-0 text-[10px] text-[var(--color-muted)] font-mono">
+                <span className="shrink-0 font-mono text-[10px] text-[var(--color-muted)]">
                   · {item.secondary.toLocaleString("pt-BR")}
                 </span>
               )}

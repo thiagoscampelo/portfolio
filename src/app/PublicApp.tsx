@@ -22,6 +22,7 @@ import { Routes, Route } from "react-router-dom";
 import PublicLayout from "../layouts/PublicLayout";
 import ScrollToTop from "../components/layout/ScrollToTop";
 import AppLoading from "../components/layout/AppLoading";
+import ErrorBoundary from "../components/layout/ErrorBoundary";
 import { usePageTracking } from "../hooks/usePageTracking";
 
 const Home = lazy(() => import("../pages/Home/Home"));
@@ -42,7 +43,13 @@ export default function PublicApp() {
       <ScrollToTop />
       <Suspense fallback={<AppLoading />}>
         <Routes>
-          <Route element={<PublicLayout />}>
+          <Route
+            element={
+              <ErrorBoundary variant="public">
+                <PublicLayout />
+              </ErrorBoundary>
+            }
+          >
             <Route path="/" element={<Home />} />
             <Route path="/projetos" element={<Projects />} />
             <Route path="/projetos/:slug" element={<ProjectDetails />} />
@@ -50,7 +57,14 @@ export default function PublicApp() {
             <Route path="/contato" element={<Contact />} />
             <Route path="/experiencia" element={<Experiences />} />
           </Route>
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="*"
+            element={
+              <ErrorBoundary variant="public">
+                <NotFound />
+              </ErrorBoundary>
+            }
+          />
         </Routes>
       </Suspense>
     </>

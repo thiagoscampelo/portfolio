@@ -25,6 +25,7 @@ import AdminGuard from "../components/auth/AdminGuard";
 import AdminLayout from "../layouts/AdminLayout";
 import ScrollToTop from "../components/layout/ScrollToTop";
 import AppLoading from "../components/layout/AppLoading";
+import ErrorBoundary from "../components/layout/ErrorBoundary";
 
 const Login = lazy(() => import("../pages/Admin/Login/Login"));
 const AdminDashboard = lazy(
@@ -54,13 +55,19 @@ const NotFound = lazy(() => import("../pages/NotFound/NotFound"));
 
 export default function AdminApp() {
   return (
-    <>
+    <div className="admin-theme min-h-screen bg-[var(--color-background)] text-[var(--color-foreground)]">
       <ScrollToTop />
       <Suspense fallback={<AppLoading />}>
         <Routes>
           <Route path="/login" element={<Login />} />
 
-          <Route element={<AdminGuard />}>
+          <Route
+            element={
+              <ErrorBoundary variant="admin">
+                <AdminGuard />
+              </ErrorBoundary>
+            }
+          >
             <Route element={<AdminLayout />}>
               <Route path="/" element={<AdminDashboard />} />
               <Route path="/projetos" element={<AdminProjects />} />
@@ -73,9 +80,16 @@ export default function AdminApp() {
               <Route path="/analytics" element={<AdminAnalytics />} />
             </Route>
           </Route>
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="*"
+            element={
+              <ErrorBoundary variant="admin">
+                <NotFound />
+              </ErrorBoundary>
+            }
+          />
         </Routes>
       </Suspense>
-    </>
+    </div>
   );
 }

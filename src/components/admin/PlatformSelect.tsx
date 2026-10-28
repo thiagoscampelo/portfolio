@@ -149,7 +149,7 @@ export default function PlatformSelect({
         onKeyDown={handleKeyDown}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        className="w-full flex items-center gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-3 py-2 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full flex items-center gap-3 rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-3 py-2 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         <SocialIcon
           as="span"
@@ -174,7 +174,7 @@ export default function PlatformSelect({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.15 }}
-            className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 max-h-64 overflow-y-auto rounded-xl border border-[var(--color-border)] bg-[var(--color-card)]/95 backdrop-blur-2xl shadow-2xl p-1.5"
+            className="absolute left-0 right-0 top-[calc(100%+6px)] z-50 max-h-64 overflow-y-auto rounded-lg border border-[var(--color-border)] bg-[var(--color-card)] shadow-2xl shadow-black/40 p-1.5"
           >
             {options.map((option, index) => {
               const isSelected = option === value;
@@ -187,9 +187,9 @@ export default function PlatformSelect({
                   aria-selected={isSelected}
                   onMouseEnter={() => setHighlightedIndex(index)}
                   onClick={() => handleSelect(option)}
-                  className={`w-full flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-left transition-colors ${
+                  className={`flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm transition-colors ${
                     isHighlighted
-                      ? "bg-[var(--color-background)]/60"
+                      ? "bg-white/[0.04]"
                       : "bg-transparent"
                   } ${
                     isSelected
@@ -204,7 +204,7 @@ export default function PlatformSelect({
                   />
                   <span className="flex-1">{option}</span>
                   {isSelected && (
-                    <Check size={14} className="text-indigo-400" />
+                    <Check size={14} className="text-brand" />
                   )}
                 </button>
               );

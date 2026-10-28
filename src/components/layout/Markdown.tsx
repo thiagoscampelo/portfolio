@@ -81,7 +81,7 @@ export default function Markdown({ children, className = "" }: MarkdownProps) {
             },
             li: {
               component: "li",
-              props: { className: "pl-1 marker:text-indigo-500" },
+              props: { className: "pl-1 marker:text-brand-deep" },
             },
             strong: {
               component: "strong",
@@ -99,7 +99,7 @@ export default function Markdown({ children, className = "" }: MarkdownProps) {
                 target: "_blank",
                 rel: "noopener noreferrer",
                 className:
-                  "text-indigo-400 hover:text-indigo-300 underline underline-offset-4 decoration-[var(--color-border)] hover:decoration-indigo-400 transition-colors",
+                  "text-brand-deep hover:text-brand underline underline-offset-4 decoration-[var(--color-border)] hover:decoration-brand transition-colors",
               },
             },
             code: {
@@ -120,7 +120,7 @@ export default function Markdown({ children, className = "" }: MarkdownProps) {
               component: "blockquote",
               props: {
                 className:
-                  "mb-5 border-l-2 border-indigo-500/40 pl-4 italic last:mb-0",
+                  "mb-5 border-l-2 border-brand/40 pl-4 italic last:mb-0",
               },
             },
             hr: {

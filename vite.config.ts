@@ -8,9 +8,11 @@
  *      diretamente, incluindo o bloco `@theme` com os design tokens.
  *
  * 2. **`injectSiteUrl()` — plugin customizado**:
- *    - Substitui o placeholder `__SITE_URL__` em `robots.txt` e
- *      `sitemap.xml` pelo valor real de `VITE_SITE_URL` após o build.
- *    - Roda no hook `closeBundle` (depois de tudo em `dist/`).
+ *    - `robots.txt` — substitui o placeholder `__SITE_URL__` pelo valor
+ *      real de `VITE_SITE_URL` após o build.
+ *    - `sitemap.xml` — regenerado no build: rotas estáticas + uma URL
+ *      por projeto publicado (consultado no Supabase, com `lastmod`).
+ *    - Ambos rodam no hook `closeBundle` (depois de tudo em `dist/`).
  *    - Por que não em runtime: esses arquivos são estáticos — servidos
  *      pelo CDN do Netlify, não por JS. Precisam ter o domínio correto
  *      no momento do build.
@@ -29,29 +31,117 @@ import { readFileSync, writeFileSync, existsSync } from "node:fs";
 import { resolve } from "node:path";
 
 /**
- * Plugin que substitui __SITE_URL__ nos arquivos de /public durante o build.
+ * Plugin que substitui __SITE_URL__ e gera o sitemap no build.
  *
- * Sem isso, o robots.txt e o sitemap.xml ficariam com placeholder fixo —
- * inúteis para crawlers em produção.
+ * Dois trabalhos:
+ * 1. `robots.txt` — troca o placeholder pelo domínio real.
+ * 2. `sitemap.xml` — além da substituição, consulta `projects` no Supabase
+ *    (apenas slugs publicados) e anexa uma URL por projeto, com `lastmod`
+ *    derivado de `updated_at`. Sem o fetch, o sitemap continua válido
+ *    com as 5 rotas estáticas do template.
+ *
+ * Por que build-time e não runtime: os arquivos são estáticos, servidos
+ * pelo CDN do Netlify — crawlers só enxergam o que foi publicado.
  *
  * `apply: "build"` garante que o plugin só roda em `vite build`, não em
  * `vite dev` (onde os arquivos são servidos diretamente de /public sem
  * processamento).
  */
-function injectSiteUrl(siteUrl: string) {
+async function fetchPublishedProjects(env: Record<string, string>) {
+  const base = env.VITE_SUPABASE_URL;
+  const key = env.VITE_SUPABASE_ANON_KEY;
+  if (!base || !key) return [];
+
+  try {
+    const params = new URLSearchParams({
+      select: "slug,updated_at",
+      published: "eq.true",
+      order: "order.asc",
+    });
+    const res = await fetch(`${base}/rest/v1/projects?${params}`, {
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${key}`,
+        Accept: "application/json",
+      },
+    });
+    if (!res.ok) return [];
+    const rows = (await res.json()) as {
+      slug: string;
+      updated_at: string | null;
+    }[];
+    return rows.filter((r) => Boolean(r?.slug));
+  } catch {
+    return [];
+  }
+}
+
+function projectSitemapEntry(
+  slug: string,
+  updatedAt: string | null,
+  siteUrl: string,
+) {
+  const lastmod =
+    updatedAt && !Number.isNaN(Date.parse(updatedAt))
+      ? updatedAt.slice(0, 10)
+      : null;
+
+  return [
+    "  <url>",
+    `    <loc>${siteUrl}/projetos/${slug}</loc>`,
+    ...(lastmod ? [`    <lastmod>${lastmod}</lastmod>`] : []),
+    "    <changefreq>monthly</changefreq>",
+    "    <priority>0.7</priority>",
+    "  </url>",
+  ].join("\n");
+}
+
+function injectSiteUrl(siteUrl: string, env: Record<string, string>) {
   return {
     name: "inject-site-url",
     apply: "build" as const,
-    closeBundle() {
-      const filesToProcess = ["robots.txt", "sitemap.xml"];
+    async closeBundle() {
       const distDir = resolve(process.cwd(), "dist");
 
-      for (const file of filesToProcess) {
-        const filePath = resolve(distDir, file);
-        if (!existsSync(filePath)) continue;
+      // 1. robots.txt — só troca o placeholder
+      const robotsPath = resolve(distDir, "robots.txt");
+      if (existsSync(robotsPath)) {
+        const robots = readFileSync(robotsPath, "utf-8");
+        writeFileSync(robotsPath, robots.replaceAll("__SITE_URL__", siteUrl));
+      }
 
-        const content = readFileSync(filePath, "utf-8");
-        writeFileSync(filePath, content.replaceAll("__SITE_URL__", siteUrl));
+      // 2. sitemap.xml — rotas estáticas + detalhes de projeto
+      const projects = await fetchPublishedProjects(env);
+      const entry = (loc: string, freq: string, priority: string) =>
+        [
+          "  <url>",
+          `    <loc>${loc}</loc>`,
+          `    <changefreq>${freq}</changefreq>`,
+          `    <priority>${priority}</priority>`,
+          "  </url>",
+        ].join("\n");
+
+      const urls = [
+        entry(`${siteUrl}/`, "weekly", "1.0"),
+        entry(`${siteUrl}/projetos`, "weekly", "0.9"),
+        entry(`${siteUrl}/experiencia`, "monthly", "0.8"),
+        entry(`${siteUrl}/sobre`, "monthly", "0.8"),
+        entry(`${siteUrl}/contato`, "monthly", "0.7"),
+        ...projects.map((p) =>
+          projectSitemapEntry(p.slug, p.updated_at, siteUrl),
+        ),
+      ];
+
+      const sitemap = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+        ...urls,
+        "</urlset>",
+      ].join("\n");
+
+      const sitemapPath = resolve(distDir, "sitemap.xml");
+      if (existsSync(sitemapPath)) {
+        writeFileSync(sitemapPath, `${sitemap}\n`);
       }
     },
   };
@@ -67,7 +157,7 @@ export default defineConfig(({ mode }) => {
   const siteUrl = env.VITE_SITE_URL || "https://tscampelo.com.br";
 
   return {
-    plugins: [tailwindcss(), injectSiteUrl(siteUrl)],
+    plugins: [tailwindcss(), injectSiteUrl(siteUrl, env)],
 
     server: {
       host: true,

@@ -171,57 +171,48 @@ export default function AdminCollaborations() {
   }
 
   return (
-    <div className="flex flex-col gap-8 max-w-7xl mx-auto pb-12">
+    <div className="flex flex-col gap-6 max-w-7xl mx-auto pb-12">
       <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-6 rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/40 backdrop-blur-xl shadow-xl relative overflow-hidden"
+        className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[var(--color-border)] pb-6"
       >
-        <div className="relative z-10">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-muted)] mb-1">
-            <Handshake size={14} className="text-indigo-400" />
+        <div>
+          <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--color-muted)]">
+            <Handshake size={14} className="text-brand" />
             <span>Formatos de Trabalho</span>
           </div>
-          <h1 className="text-3xl font-semibold tracking-[-0.03em] text-[var(--color-foreground)]">
+          <h1 className="mt-3 text-[1.75rem] font-medium tracking-[-0.035em] text-[var(--color-foreground)] sm:text-[2rem]">
             Colaborações
           </h1>
-          <p className="mt-1 text-sm text-[var(--color-muted)]">
+          <p className="mt-2 max-w-2xl text-sm leading-relaxed text-[var(--color-muted)]">
             Tipos de trabalho exibidos na página de Contato.
           </p>
         </div>
 
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
           onClick={handleOpenCreate}
-          className="relative z-10 flex items-center justify-center gap-2 rounded-xl bg-indigo-600 px-5 py-3 text-sm font-medium text-white shadow-lg shadow-indigo-600/25 hover:bg-indigo-500 transition-all border border-indigo-400/30"
+          className="flex items-center justify-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-[13px] font-medium text-brand-contrast transition-colors hover:bg-brand-hover"
         >
           <Plus size={18} /> Nova Colaboração
         </motion.button>
 
-        <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
       </motion.div>
 
       {/* Tabela — responsiva via scroll horizontal em mobile */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/30 backdrop-blur-xl shadow-2xl overflow-hidden"
+        className="rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] overflow-hidden"
       >
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm border-collapse min-w-[700px]">
-            <thead className="border-b border-[var(--color-border)] bg-[var(--color-background)]/60 text-[11px] font-semibold uppercase tracking-[0.15em] text-[var(--color-muted)]">
+            <thead className="border-b border-[var(--color-border)] font-mono text-[10px] font-medium uppercase tracking-[0.16em] text-[var(--color-muted)]">
               <tr>
-                <th className="px-6 py-4">Título</th>
-                <th className="px-6 py-4">Descrição</th>
-                <th className="px-6 py-4 text-center">Status</th>
-                <th className="px-6 py-4 text-right">Ações</th>
+                <th className="px-5 py-3.5">Título</th>
+                <th className="px-5 py-3.5">Descrição</th>
+                <th className="px-5 py-3.5 text-center">Status</th>
+                <th className="px-5 py-3.5 text-right">Ações</th>
               </tr>
             </thead>
 
-            <tbody className="divide-y divide-[var(--color-border)]/60">
+            <tbody className="divide-y divide-[var(--color-border)]">
               {loading ? (
                 Array.from({ length: 3 }).map((_, i) => (
                   <tr key={i} className="animate-pulse">
@@ -268,26 +259,26 @@ export default function AdminCollaborations() {
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, x: -20 }}
                       transition={{ duration: 0.3, delay: index * 0.04 }}
-                      className="group hover:bg-[var(--color-background)]/40 transition-colors"
+                      className="group hover:bg-white/[0.02] transition-colors"
                     >
-                      <td className="px-6 py-4">
-                        <p className="font-semibold text-[var(--color-foreground)] group-hover:text-indigo-400 transition-colors">
+                      <td className="px-5 py-3.5">
+                        <p className="font-semibold text-[var(--color-foreground)] group-hover:text-brand transition-colors">
                           {collab.title}
                         </p>
                       </td>
 
-                      <td className="px-6 py-4 text-xs text-[var(--color-muted)] max-w-md">
+                      <td className="px-5 py-3.5 text-xs text-[var(--color-muted)] max-w-md">
                         <span className="line-clamp-2">
                           {collab.description}
                         </span>
                       </td>
 
-                      <td className="px-6 py-4 text-center">
+                      <td className="px-5 py-3.5 text-center">
                         <button
                           onClick={() => togglePublish(collab)}
-                          className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium border transition-all ${
+                          className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-[11px] font-medium transition-colors ${
                             collab.published
-                              ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                              ? "bg-brand/10 text-brand border-brand/20"
                               : "bg-zinc-500/10 text-zinc-400 border-zinc-500/20"
                           }`}
                         >
@@ -300,7 +291,7 @@ export default function AdminCollaborations() {
                         </button>
                       </td>
 
-                      <td className="px-6 py-4 text-right">
+                      <td className="px-5 py-3.5 text-right">
                         <div className="flex items-center justify-end gap-1.5">
                           <ReorderButtons
                             onMoveUp={() =>
@@ -315,20 +306,16 @@ export default function AdminCollaborations() {
                           />
 
                           <motion.button
-                            whileHover={{ scale: 1.08 }}
-                            whileTap={{ scale: 0.95 }}
                             onClick={() => handleOpenEdit(collab)}
-                            className="p-2 rounded-xl text-[var(--color-muted)] hover:text-indigo-400 hover:bg-indigo-500/10 border border-transparent hover:border-indigo-500/20 transition-all"
+                            className="p-2 rounded-md text-[var(--color-muted)] hover:text-brand hover:bg-brand/10 border border-transparent hover:border-brand/20 transition-all"
                             title="Editar"
                           >
                             <Pencil size={16} />
                           </motion.button>
 
                           <motion.button
-                            whileHover={{ scale: 1.08 }}
-                            whileTap={{ scale: 0.95 }}
                             onClick={() => handleDelete(collab)}
-                            className="p-2 rounded-xl text-[var(--color-muted)] hover:text-red-400 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all"
+                            className="p-2 rounded-md text-[var(--color-muted)] hover:text-red-400 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all"
                             title="Excluir"
                           >
                             <Trash2 size={16} />
@@ -352,7 +339,7 @@ export default function AdminCollaborations() {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={() => setIsModalOpen(false)}
-              className="absolute inset-0 bg-black/70 backdrop-blur-md"
+              className="absolute inset-0 bg-black/75 backdrop-blur-sm"
             />
 
             <motion.div
@@ -360,21 +347,21 @@ export default function AdminCollaborations() {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
-              className="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-2xl border border-[var(--color-border)] bg-[var(--color-card)]/90 backdrop-blur-2xl shadow-2xl overflow-hidden z-10"
+              className="relative w-full max-w-lg max-h-[85vh] flex flex-col rounded-xl border border-[var(--color-border)] bg-[var(--color-card)] shadow-2xl shadow-black/40 overflow-hidden z-10"
             >
-              <div className="p-6 border-b border-[var(--color-border)] bg-[var(--color-card)] flex items-center justify-between shrink-0">
+              <div className="flex items-center justify-between border-b border-[var(--color-border)] p-5 shrink-0">
                 <div>
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-indigo-400 block mb-0.5">
+                  <span className="font-mono text-[9px] uppercase tracking-[0.22em] text-brand block mb-1">
                     {editingCollab ? "Edição" : "Novo Cadastro"}
                   </span>
-                  <h2 className="text-xl font-semibold text-[var(--color-foreground)]">
+                  <h2 className="text-lg font-medium tracking-[-0.02em] text-[var(--color-foreground)]">
                     {editingCollab ? "Editar Colaboração" : "Nova Colaboração"}
                   </h2>
                 </div>
 
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="p-2 rounded-xl text-[var(--color-muted)] hover:text-[var(--color-foreground)] hover:bg-[var(--color-background)] transition"
+                  className="rounded-md p-2 text-[var(--color-muted)] transition-colors hover:bg-white/[0.04] hover:text-[var(--color-foreground)]"
                 >
                   <X size={18} />
                 </button>
@@ -386,7 +373,7 @@ export default function AdminCollaborations() {
                 className="flex-1 overflow-y-auto p-6 flex flex-col gap-5"
               >
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                  <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                     Título
                   </label>
                   <input
@@ -395,12 +382,12 @@ export default function AdminCollaborations() {
                     placeholder="Ex: Freelance / Projetos pontuais"
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-2.5 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-[var(--color-muted)] mb-2">
+                  <label className="mb-2 block font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--color-muted)]">
                     Descrição
                   </label>
                   <textarea
@@ -409,7 +396,7 @@ export default function AdminCollaborations() {
                     placeholder="Desenvolvimento de aplicações web sob demanda..."
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
-                    className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)]/60 p-4 text-sm text-[var(--color-foreground)] outline-none focus:border-indigo-500 transition"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-background)] p-4 text-sm text-[var(--color-foreground)] outline-none transition-colors focus:border-brand/70 focus:ring-1 focus:ring-brand/20"
                   />
                 </div>
 
@@ -419,7 +406,7 @@ export default function AdminCollaborations() {
                       type="checkbox"
                       checked={published}
                       onChange={(e) => setPublished(e.target.checked)}
-                      className="h-4 w-4 rounded accent-indigo-600"
+                      className="h-4 w-4 rounded accent-brand"
                     />
                     Publicado
                   </label>
@@ -430,7 +417,7 @@ export default function AdminCollaborations() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="rounded-xl px-4 py-2.5 text-sm font-medium text-[var(--color-muted)] hover:text-[var(--color-foreground)] transition"
+                  className="rounded-lg px-4 py-2.5 text-sm font-medium text-[var(--color-muted)] transition-colors hover:bg-white/[0.04] hover:text-[var(--color-foreground)]"
                 >
                   Cancelar
                 </button>
@@ -439,7 +426,7 @@ export default function AdminCollaborations() {
                   type="submit"
                   form="collab-form"
                   disabled={saving}
-                  className="rounded-xl bg-indigo-600 px-6 py-2.5 text-sm font-medium text-white shadow-lg shadow-indigo-600/20 hover:bg-indigo-500 transition disabled:opacity-50"
+                  className="rounded-lg bg-brand px-5 py-2.5 text-sm font-medium text-brand-contrast transition-colors hover:bg-brand-hover disabled:opacity-50"
                 >
                   {saving ? "Salvando..." : "Salvar Colaboração"}
                 </button>
